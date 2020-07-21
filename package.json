@@ -4,13 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node ./server.js",
-    "predeploy": "yarn build",
-    "deploy": "gh-pages -d build"
+    "start": "node ./server.js"
   },
   "dependencies": {
     "express": "^4.17.1",
     "request": "^2.88.2"
   },
-  "homepage": "https://shiftymitch.github.io/spotify-artist-compare/"
+  "homepage": "https://spotify-artist-compare.herokuapp.com/"
 }

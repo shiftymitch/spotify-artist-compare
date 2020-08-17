@@ -9,6 +9,7 @@ const SpotifySearch = props => {
   const [results, setResults] = useState([]);
   const [topTracks, setTopTracks] = useState([]);
   const [relatedArtists, setRelatedArtists] = useState([]);
+  const [remixes, setRemixes] = useState([]);
 
   useEffect(() => {
     axios
@@ -61,6 +62,18 @@ const SpotifySearch = props => {
         )
           .then(res3 => {
             setRelatedArtists(res3.data.artists);
+          })
+
+        // Get Remixes
+        axios.get(
+          "https://api.spotify.com/v1/search?q="
+          + search + "%20remix"
+          +"&type=track"
+          +"&access_token="
+          +token
+        )
+          .then(res => {
+            setRemixes(res.data.tracks.items)
           })
       })
       .catch(err => console.log(err));
@@ -128,6 +141,12 @@ const SpotifySearch = props => {
                     <ul className="track-results mb-5">
                       <h5>Top Tracks:</h5>
                       {topTracks == null ? "" : topTracks.map(track => (
+                        <iframe key={track.id} title={track.name} className="track" src={"https://open.spotify.com/embed/track/" + track.id} width="300" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                      ))}
+                    </ul>
+                    <ul className="remixes mb-5">
+                      <h5>Remixes:</h5>
+                      {remixes == null ? "" : remixes.map(track => (
                         <iframe key={track.id} title={track.name} className="track" src={"https://open.spotify.com/embed/track/" + track.id} width="300" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
                       ))}
                     </ul>

@@ -85,6 +85,7 @@ const SpotifySearch = props => {
         <SearchForm
           handleFormSubmit={handleFormSubmit}
           handleInputChange={handleInputChange}
+          count={props.artistCount}
         />
         {/* Search Results */}
         <div className="d-flex justify-content-around">
@@ -105,30 +106,29 @@ const SpotifySearch = props => {
                 <hr></hr>
                 <div className="row">
                   <div className="col">
-                    <ul className="track-results mb-5">
-                      <h5>Top Tracks:</h5>
-                      {console.log(topTracks)}
-                      {topTracks.map(track => (
-                        <iframe title={track.name} className="track" src={"https://open.spotify.com/embed/track/" + track.id} width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-                        // <a href={track.external_urls.spotify} className="track">
-                        //   <li key={track.id} className="list-group-item">
-                        //     <img src={track.album.images[2].url} className="track-img"></img>
-                        //     <p>{track.name}</p>
-                        //   </li>
-                        // </a>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="col">
                     <ul className="related-artists mb-5">
                       <h5>Related Artists:</h5>
                       {relatedArtists.map(artist => (
-                        <a href={artist.external_urls.spotify} className="artist">
-                          <li key={artist.id} className="list-group-item">
+                        <a key={artist.id} onClick={() => {
+                          document.getElementById("search-" + props.artistCount).value = artist.name;
+                          setSearch(artist.name);
+                          setTimeout(() => {
+                            document.getElementById("search-btn-" + props.artistCount).click();
+                          }, 500);
+                        }} className="artist">
+                          <li className="list-group-item">
                           <img src={artist.images[2].url} className="artist-img" alt={artist.name}></img>
                             <p>{artist.name}</p>
                           </li>
                         </a>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="col">
+                    <ul className="track-results mb-5">
+                      <h5>Top Tracks:</h5>
+                      {topTracks == null ? "" : topTracks.map(track => (
+                        <iframe key={track.id} title={track.name} className="track" src={"https://open.spotify.com/embed/track/" + track.id} width="300" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
                       ))}
                     </ul>
                   </div>

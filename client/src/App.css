@@ -46,6 +46,7 @@ ul, .col {
 .track li:hover, .artist li:hover {
   border-style: inset;
   border: 2px solid #87c540;
+  cursor: pointer;
 }
 
 .list-group-item {

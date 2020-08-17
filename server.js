@@ -33,10 +33,9 @@ app.get('/api/token', (req, res) => {
 
 // serve static assets
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static("client/build"));
-    app.get("*", (req, res) =>
-        res.sendFile(path.join(__dirname, "./build/index.html"))
-  );
+  app.use(express.static('./build'));
+  // server index.html if `/about` reached -> assets served through `express.static`
+  app.get('*', (req, res) => res.sendFile(path.join(__dirname, './build/index.html')));
 }
 
 app.listen(PORT, () => console.log('App running on PORT: ' + PORT));

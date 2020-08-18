@@ -46,6 +46,10 @@ ul, .row, .col {
   padding: 0;
 }
 
+.col {
+  min-width: 170px;
+}
+
 .col-4 {
   padding-left: 0;
 }
@@ -56,7 +60,7 @@ ul, .row, .col {
   margin-right: 10px;
 }
 
-.related-artists, .track-results, .remixes, .events {
+.related-artists, .track-results, .remixes, .events, .latest-release {
   color: black;
   padding: 15px 10px;
   margin-right: 25px;
@@ -64,7 +68,7 @@ ul, .row, .col {
 
 .track, .artist {
   display: inline-block;
-  width: 85%;
+  width: 100%;
 }
 
 .track, .artist {
@@ -101,11 +105,11 @@ ul, .row, .col {
   border-style: inset;
   border: 1px solid #e2e2e2;
   padding: 15px;
-  width: 355px;
+  width: 92.75%;
 }
 
 .event li {
-  width: 355px;
+  width: 100%;
 }
 
 #icon {

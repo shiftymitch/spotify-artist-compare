@@ -203,6 +203,7 @@ const SpotifySearch = props => {
                           setSearch(artist.name);
                           setTimeout(() => {
                             document.getElementById("search-btn-" + props.artistCount).click();
+                            window.scrollTo(0, 0);
                           }, 500);
                         }} className="artist">
                           <li className="list-group-item">

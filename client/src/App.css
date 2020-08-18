@@ -4,7 +4,7 @@ p {
 }
 
 a, h1, h2, h3, h4, h5 {
-  color:#87c540;
+  color:#1DB954;
 }
 
 ul {
@@ -13,28 +13,36 @@ ul {
 }
 
 hr {
-  border: 2px solid #87c540;
+  border: 2px solid #1DB954;
 }
 
 .navbar {
   background-color: #252525;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navbar-brand #spotify-icon{
+  float: left;
+}
+
+.navbar-brand #navbar-name {
+  color: white;
 }
 
 .navbar-brand {
-  color: white;
-  font-size: 18px;
   max-width: 200px;
 }
 
 .btn-outline-success {
-  color:#87c540;
-  border-color: #87c540;
+  color:#1DB954;
+  border-color: #1DB954;
 }
 
 .btn-outline-success:hover {
   background-color: #f9f9f9;
   color:#252525;
-  border-color: #87c540;
+  border-color: #1DB954;
 }
 
 .search-results {
@@ -77,7 +85,7 @@ ul, .row, .col {
 
 .track li:hover, .latest-release:hover, .artist li:hover {
   border-style: inset;
-  border: 2px solid #87c540;
+  border: 2px solid #1DB954;
   background-color: #f1ffe6;
   cursor: pointer;
 }
@@ -166,4 +174,8 @@ ul, .row, .col {
   z-index: 10;
   background-color: #252525;
   box-shadow: 0px 0px 30px #151515;
+}
+
+.footer p {
+  color: #1DB954;
 }

@@ -3,8 +3,11 @@ import { Link } from "react-router-dom";
 
 function Nav() {
   return (
-      <div className="navbar navbar-expand-lg position-sticky justify-content-between">
-        <p className="navbar-brand"><img src="/spotify_icon.png" alt="spotify-icon"></img><strong className="ml-3">Artist Compare</strong></p>
+      <div className="navbar navbar-expand-lg position-sticky">
+        <div  className="navbar-brand">
+          <img src="/spotify_icon.svg" id="spotify-icon" alt="spotify-icon"></img>
+          <p id="navbar-name"><strong>Artist Compare</strong></p>
+        </div>
         <Link to={() => {
           if (window.location.pathname === "/compare") {
             return `/`;

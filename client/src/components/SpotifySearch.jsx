@@ -44,15 +44,15 @@ const SpotifySearch = props => {
           // Get Latest Release
           axios.get(
             "https://api.spotify.com/v1/search?q="
-            + "artist:" + search
-            + "%20year:" + moment().format("YYYY")
+            +"artist:" + search
             +"&type=track"
             +"&access_token="
             +token
           )
-            .then(res => {
-              setLatestRelease(res.data.tracks.items[0])
-              setCurrentTrack(res.data.tracks.items[0].id)
+            .then(res2 => {
+              console.log(res2.data.tracks.items)
+              setLatestRelease(res2.data.tracks.items[0])
+              setCurrentTrack(res2.data.tracks.items[0].id)
             })
         
         // Get Top Tracks
@@ -64,8 +64,8 @@ const SpotifySearch = props => {
           +"&access_token="
           +token
         )
-          .then(res2 => {
-            setTopTracks(res2.data.tracks);
+          .then(res3 => {
+            setTopTracks(res3.data.tracks);
           })
 
 
@@ -77,8 +77,8 @@ const SpotifySearch = props => {
           +"&access_token="
           +token
         )
-          .then(res3 => {
-            setRelatedArtists(res3.data.artists);
+          .then(res4 => {
+            setRelatedArtists(res4.data.artists);
           })
 
         // Get Remixes
@@ -89,8 +89,8 @@ const SpotifySearch = props => {
           +"&access_token="
           +token
         )
-          .then(res => {
-            setRemixes(res.data.tracks.items);
+          .then(res5 => {
+            setRemixes(res5.data.tracks.items);
           })
       })
       .catch(err => console.log(err));
@@ -126,7 +126,7 @@ const SpotifySearch = props => {
           <ul className="search-results">
             {results.slice(0, 1).map(result => (
               <li key={result.id} className="list-group-item">
-                <div className="row">  
+                <div className="row">
                   <div className="col-4">
                     <img className="img-fluid" src={image()} alt={result.name}></img>
                   </div>
@@ -136,12 +136,17 @@ const SpotifySearch = props => {
                     <p><strong>Popularity: </strong>{result.popularity}</p>
                     <p><strong>Genres: </strong>{result.genres.join(", ")}</p>
                     <p><strong>Latest Release:</strong></p>
-                    <li className="latest-release">
-                      <img src={latestRelease.album == null ? "" : latestRelease.album.images[1].url} className="latest-img" alt={latestRelease.name}></img>
-                      <p>{latestRelease.name}</p>
-                      <p>{latestRelease.album == null ? "N/A" : moment(latestRelease.album.release_date).format("MMM Do, YYYY")}</p>
-                    </li>
+                    <a key={latestRelease.id} className="track" onClick={() => {
+                      setCurrentTrack(latestRelease.id);
+                    }} >
+                      <li className="list-group-item">
+                        <img src={latestRelease.album == null ? "" : latestRelease.album.images[2].url} className="latest-img" alt={latestRelease.name}></img>
+                        <p>{latestRelease.name}</p>
+                        <p>{latestRelease.album == null ? "N/A" : moment(latestRelease.album.release_date).format("MMM Do, YYYY")}</p>
+                      </li>
+                    </a>
                   </div> 
+                  <a href={result.external_urls.spotify} target="_blank" rel="noopener noreferrer"><img src="/spotify_icon.png" title="View on Spotify.com" alt="spotify-icon" id="spotify-icon"></img></a>
                 </div>
                 <hr></hr>
                 <div className="row">

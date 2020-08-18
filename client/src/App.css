@@ -1,6 +1,7 @@
 
 p, .related-artists a, .track-results a {
   color: black;
+  margin-bottom: 0;
 }
 
 a, h1, h2, h3, h4, h5 {
@@ -9,6 +10,7 @@ a, h1, h2, h3, h4, h5 {
 
 ul {
   list-style: none;
+  line-height: 30px;
 }
 
 .navbar-brand {
@@ -28,6 +30,12 @@ ul {
 
 ul, .col {
   padding: 2px;
+}
+
+#spotify-icon {
+  float: right;
+  max-height: 35px;
+  margin-right: 10px;
 }
 
 .related-artists, .track-results, .remixes {

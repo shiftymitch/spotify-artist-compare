@@ -1,5 +1,4 @@
-
-p, .related-artists a, .track-results a {
+p {
   color: black;
   margin-bottom: 0;
 }
@@ -13,8 +12,14 @@ ul {
   line-height: 30px;
 }
 
+.navbar {
+  background-color: #252525;
+}
+
 .navbar-brand {
   color: white;
+  font-size: 18px;
+  max-width: 200px;
 }
 
 .btn-outline-success {
@@ -28,8 +33,17 @@ ul {
   border-color: #87c540;
 }
 
-ul, .col {
-  padding: 2px;
+.search-results {
+  padding-bottom: 100px;
+}
+
+ul, .row, .col {
+  margin: 0;
+  padding: 0;
+}
+
+.col-4 {
+  padding-left: 0;
 }
 
 #spotify-icon {
@@ -40,12 +54,13 @@ ul, .col {
 
 .related-artists, .track-results, .remixes {
   color: black;
-  padding: 15px;
+  padding: 15px 10px;
+  margin-right: 25px;
 }
 
 .track, .artist {
   display: inline-block;
-  min-width: 85%;
+  width: 85%;
 }
 
 .artist {
@@ -56,15 +71,16 @@ ul, .col {
   margin-bottom: 5px;
 }
 
-.track li:hover, .artist li:hover {
+.track li:hover, .latest-release:hover, .artist li:hover {
   border-style: inset;
   border: 2px solid #87c540;
-  background-color: #e2e2e2;
+  background-color: #f1ffe6;
   cursor: pointer;
 }
 
 .list-group-item {
   min-height: 75px;
+  padding: 15px 10px;
 }
 
 .artist-img {
@@ -82,7 +98,7 @@ ul, .col {
 .latest-release {
   border-radius: 5px;
   border-style: inset;
-  border: 2px solid #87c540;
+  border: 1px solid #e2e2e2;
   padding: 15px;
   max-width: 500px;
 }
@@ -99,6 +115,31 @@ ul, .col {
 }
 
 .current-track {
-  padding-left: 25px;
-  padding-right: 25px;
+  margin: 0 auto;
+  margin-bottom: 15px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 80px;
+  z-index: 10;
+  box-shadow: 0px 0px 30px #151515;
+}
+
+#current-track {
+  display: block;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 80px;
+  z-index: 10;
+  background-color: #252525;
+  box-shadow: 0px 0px 30px #151515;
 }

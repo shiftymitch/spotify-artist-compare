@@ -4,6 +4,8 @@ import Container from "./Container";
 import SearchForm from "./SearchForm";
 import moment from "moment";
 
+document.querySelector(".current-track")
+
 const SpotifySearch = props => {
   const [token, setToken] = useState([]);
   const [search, setSearch] = useState();
@@ -12,6 +14,7 @@ const SpotifySearch = props => {
   const [relatedArtists, setRelatedArtists] = useState([]);
   const [remixes, setRemixes] = useState([]);
   const [latestRelease, setLatestRelease] = useState([]);
+  const [playerType, setPlayerType] = useState([]);
   const [currentTrack, setCurrentTrack] = useState([]);
 
   useEffect(() => {
@@ -39,20 +42,24 @@ const SpotifySearch = props => {
       +token
     )
       .then(res => {
+        let artistId = res.data.artists.items.filter(filtered => filtered.name.length === search.length)[0].id;
         setResults(res.data.artists.items.filter(filtered => filtered.name.length === search.length));
 
           // Get Latest Release
           axios.get(
-            "https://api.spotify.com/v1/search?q="
-            +"artist:" + search
-            +"&type=track"
+            "https://api.spotify.com/v1/artists/"
+            + artistId
+            +"/albums?q="
+            +"&include_groups=single"
+            +"&market=US"
             +"&access_token="
             +token
           )
             .then(res2 => {
-              console.log(res2.data.tracks.items)
-              setLatestRelease(res2.data.tracks.items[0])
-              setCurrentTrack(res2.data.tracks.items[0].id)
+              console.log(res2.data.items[0])
+              setLatestRelease(res2.data.items[0])
+              setPlayerType("album")
+              setCurrentTrack(res2.data.items[0].id)
             })
         
         // Get Top Tracks
@@ -67,7 +74,6 @@ const SpotifySearch = props => {
           .then(res3 => {
             setTopTracks(res3.data.tracks);
           })
-
 
         // Get Related Artists
         axios.get(
@@ -110,10 +116,6 @@ const SpotifySearch = props => {
 
   return (
     <div>
-      {/* Music Player */}
-      <div className="current-track fixed-bottom">
-        <iframe id="current-track" title="current-track" src={"https://open.spotify.com/embed/track/" + currentTrack} width="100%" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-      </div>
       <Container>
         <h3 id="search-header" className="text-center">Artist {props.artistCount}</h3>
         <SearchForm
@@ -121,6 +123,10 @@ const SpotifySearch = props => {
           handleInputChange={handleInputChange}
           count={props.artistCount}
         />
+        {/* Music Player */}
+        <div className="current-track sticky-top">
+          <iframe id="current-track" title="current-track" src={"https://open.spotify.com/embed/" + playerType + "/" + currentTrack} width="100%" height="100%" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+        </div>
         {/* Search Results */}
         <div className="d-flex justify-content-around">
           <ul className="search-results">
@@ -135,19 +141,20 @@ const SpotifySearch = props => {
                     <p><strong>Followers: </strong>{numberWithCommas(result.followers.total)}</p>
                     <p><strong>Popularity: </strong>{result.popularity}</p>
                     <p><strong>Genres: </strong>{result.genres.join(", ")}</p>
-                    <p><strong>Latest Release:</strong></p>
-                    <a key={latestRelease.id} className="track" onClick={() => {
-                      setCurrentTrack(latestRelease.id);
-                    }} >
-                      <li className="list-group-item">
-                        <img src={latestRelease.album == null ? "" : latestRelease.album.images[2].url} className="latest-img" alt={latestRelease.name}></img>
-                        <p>{latestRelease.name}</p>
-                        <p>{latestRelease.album == null ? "N/A" : moment(latestRelease.album.release_date).format("MMM Do, YYYY")}</p>
-                      </li>
-                    </a>
                   </div> 
                   <a href={result.external_urls.spotify} target="_blank" rel="noopener noreferrer"><img src="/spotify_icon.png" title="View on Spotify.com" alt="spotify-icon" id="spotify-icon"></img></a>
                 </div>
+                <p><strong>Latest Release:</strong></p>
+                <a key={latestRelease.id} className="track" onClick={() => {
+                  setPlayerType("album")
+                  setCurrentTrack(latestRelease.id);
+                }} >
+                  <div className="latest-release">
+                    <img src={latestRelease.images == null ? "" : latestRelease.images[2].url} className="latest-img" alt={latestRelease.name}></img>
+                    <p>{latestRelease.name}</p>
+                    <p>{latestRelease.release_date == null ? "N/A" : moment(latestRelease.release_date).format("MMM Do, YYYY")}</p>
+                  </div>
+                </a>
                 <hr></hr>
                 <div className="row">
                   <div className="col">
@@ -174,6 +181,7 @@ const SpotifySearch = props => {
                       <h5>Top Tracks:</h5>
                       {topTracks == null ? "" : topTracks.map(track => (
                         <a key={track.id} className="track" onClick={() => {
+                          setPlayerType("track");
                           setCurrentTrack(track.id);
                         }} >
                           <li className="list-group-item">
@@ -187,6 +195,7 @@ const SpotifySearch = props => {
                       <h5>Remixes:</h5>
                       {remixes == null ? "" : remixes.map(track => (
                         <a key={track.id} className="track" onClick={() => {
+                          setPlayerType("track")
                           setCurrentTrack(track.id);
                         }}>
                           <li className="list-group-item">

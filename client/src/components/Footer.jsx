@@ -1,8 +1,11 @@
 import React from 'react';
+import moment from "moment";
 
 function Footer() {
   return (
-    <h5 className="text-center align-bottom mt-5 mb-5" >Built by <a href="https://github.com/shiftymitch">Mitch Henderson</a></h5>
+    <div className="footer">
+      <p className="row text-light">© Copyright {moment().format("YYYY")}</p>
+    </div>
   );
 }
 

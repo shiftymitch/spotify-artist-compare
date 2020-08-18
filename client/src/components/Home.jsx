@@ -3,7 +3,7 @@ import SpotifySearch from "./SpotifySearch.jsx"
 
 function Compare() {
   return (
-      <div className="row ml-5 mr-5">
+      <div className="row">
         <div className="col">
             <SpotifySearch artistCount="Search"/>
         </div>

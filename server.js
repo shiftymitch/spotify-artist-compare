@@ -32,6 +32,10 @@ app.get('/api/token', (req, res) => {
   });
 });
 
+app.get("/api/songkick", (req, res) => {
+  res.json({ token: process.env.SONGKICK_API_KEY});
+});
+
 // serve static assets
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, './client/build')))

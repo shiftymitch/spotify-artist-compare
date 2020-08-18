@@ -7,6 +7,10 @@ a, h1, h2, h3, h4, h5 {
   color:#87c540;
 }
 
+ul {
+  list-style: none;
+}
+
 .navbar-brand {
   color: white;
 }
@@ -26,7 +30,8 @@ ul, .col {
   padding: 2px;
 }
 
-.related-artists, .track-results {
+.related-artists, .track-results, .remixes {
+  color: black;
   padding: 15px;
 }
 
@@ -46,6 +51,7 @@ ul, .col {
 .track li:hover, .artist li:hover {
   border-style: inset;
   border: 2px solid #87c540;
+  background-color: #e2e2e2;
   cursor: pointer;
 }
 
@@ -53,9 +59,38 @@ ul, .col {
   min-height: 75px;
 }
 
-.track-img, .artist-img {
+.artist-img {
+  border-radius: 32px 32px 32px 32px;
+  max-height: 64px;
+}
+
+.artist-img, .track-img {
   max-width: 50px;
   min-height: 100%;
   margin-right: 10px;
   float: left;
+}
+
+.latest-release {
+  border-radius: 5px;
+  border-style: inset;
+  border: 2px solid #87c540;
+  padding: 15px;
+  max-width: 500px;
+}
+
+.latest-img {
+  max-width: 80px;
+  float: left;
+  margin-right: 15px;
+}
+
+.artist-name {
+  font-weight: bold;
+  color: #252525;
+}
+
+.current-track {
+  padding-left: 25px;
+  padding-right: 25px;
 }

@@ -180,3 +180,9 @@ ul, .row, .col {
 .footer p {
   color: #1DB954;
 }
+
+@media only screen and (max-width: 1200px) {
+  #compare {
+    display: none;
+  }
+}

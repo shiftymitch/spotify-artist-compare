@@ -1,6 +1,6 @@
 {
-  "short_name": "Spotify Artist Compare",
-  "name": "Spotify Artist Compare",
+  "short_name": "Artist Compare",
+  "name": "Artist Compare",
   "start_url": ".",
   "display": "standalone"
 }

@@ -165,7 +165,7 @@ const SpotifySearch = props => {
                     <p><strong>Popularity: </strong>{result.popularity}</p>
                     <p><strong>Genres: </strong>{result.genres.join(", ")}</p>
                   </div> 
-                  <a href={result.external_urls.spotify} target="_blank" rel="noopener noreferrer"><img src="/spotify_icon.png" title="View on Spotify.com" alt="spotify-icon" id="spotify-icon"></img></a>
+                  <a href={result.external_urls.spotify} target="_blank" rel="noopener noreferrer"><img src="/spotify_icon.svg" title="View on Spotify.com" alt="spotify-icon" id="spotify-icon"></img></a>
                 </div>
                 <div className="row">
                   <div className="col">

@@ -89,7 +89,6 @@ const SpotifySearch = props => {
           +token
         )
           .then(res4 => {
-            console.log(res4.data.artists)
             setRelatedArtists(res4.data.artists);
           })
 
@@ -156,7 +155,7 @@ const SpotifySearch = props => {
             {results.slice(0, 1).map(result => (
               <li key={result.id} className="list-group-item">
                 <div className="row">
-                  <div className="col-4">
+                  <div className="col-4 profile-img">
                     <img className="img-fluid" src={image()} alt={result.name}></img>
                   </div>
                   <div className="col">
@@ -167,6 +166,7 @@ const SpotifySearch = props => {
                   </div> 
                   <a href={result.external_urls.spotify} target="_blank" rel="noopener noreferrer"><img src="/spotify_icon.svg" title="View on Spotify.com" alt="spotify-icon" id="spotify-icon"></img></a>
                 </div>
+                <br></br>
                 <div className="row">
                   <div className="col">
                     <p><strong>Last Release:</strong></p>

@@ -44,11 +44,13 @@ app.get("/api/fb", (req, res) => {
 app.get("/api/google/:search", (req, res) => {
   // Get Google Trend
   let query = {
-    keyword: req.params.search
+    keyword: req.params.search,
+    startTime: new Date("2019-01-01")
   };
   googleTrends.interestOverTime(query)
     .then(result => {
-      res.json(result);
+      let parsedData = JSON.parse(result)
+      res.json(parsedData);
     })
     .catch(err => {
       console.error('Oh no there was an error', err);

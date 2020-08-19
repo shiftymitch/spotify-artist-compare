@@ -20,6 +20,7 @@ const Main = props => {
   const [currentTrack, setCurrentTrack] = useState([]);
   const [events, setEvents] = useState([]);
   const [FBAudience, setFBAudience] = useState([]);
+  const [googleTrend, setGoogleTrend] = useState([]);
 
   useEffect(() => {
     // Get Spotify Token
@@ -137,12 +138,12 @@ const Main = props => {
           + fbToken
         )
           .then(res7 => {
-            setFBAudience(res7.data.data.filter(result => result.name.length === search.length)[0].audience_size.toLocaleString());
+            setFBAudience(res7.data.data.filter(result => result.name.length === search.length));
           })
 
         axios.get("/api/google/" + search)
           .then(res8 => {
-            console.log(res8);
+            setGoogleTrend(res8.data.default.timelineData.reverse());
           })
       })
       .catch(err => console.log(err));
@@ -187,7 +188,8 @@ const Main = props => {
                     <p><strong>Followers: </strong>{numberWithCommas(result.followers.total)}</p>
                     <p><strong>Popularity: </strong>{result.popularity}</p>
                     <p><strong>Genres: </strong>{result.genres.join(", ")}</p>
-                    <p><strong>FB Ads Audience: </strong>{FBAudience}</p>
+                    <p><strong>FB Ads Audience: </strong>{FBAudience[0] == null ? "N/A" : FBAudience[0].audience_size.toLocaleString()}</p>
+                    <p><strong>Google Search Trend: </strong><span>{googleTrend[0] == null ? "N/A" : googleTrend[0].formattedValue[0]} | {googleTrend[0] == null ? "N/A" : googleTrend[0].formattedValue[0] - googleTrend[3].formattedValue[0]}</span></p>
                   </div> 
                   <a href={result.external_urls.spotify} target="_blank" rel="noopener noreferrer"><img src="/spotify_icon.svg" title="View on Spotify.com" alt="spotify-icon" id="spotify-icon"></img></a>
                 </div>

@@ -208,7 +208,7 @@ const Main = props => {
                     <div className="social-links">
                       <a href={"https://www.facebook.com/search/top/?q=" + search + "&opensearch=1"} target="_blank" rel="noopener noreferrer" > <i className="fa fa-facebook" ></i></a>
                       <a href={"https://twitter.com/search?q=" + search + "&f=user"} target="_blank" rel="noopener noreferrer" > <i className="fa fa-twitter" ></i></a>
-                      <a href={"https://google.com/search?q=" + search + "instagram"} target="_blank" rel="noopener noreferrer" > <i className="fa fa-instagram" ></i></a>
+                      <a href={"https://google.com/search?q=" + search + "+instagram"} target="_blank" rel="noopener noreferrer" > <i className="fa fa-instagram" ></i></a>
                       <a href={"https://soundcloud.com/search?q=" + search} target="_blank" rel="noopener noreferrer" > <i className="fa fa-soundcloud" ></i></a>
                     </div>
                   </div> 

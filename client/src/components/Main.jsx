@@ -6,9 +6,10 @@ import moment from "moment";
 
 document.querySelector(".current-track")
 
-const SpotifySearch = props => {
+const Main = props => {
   const [token, setToken] = useState([]);
   const [songkickToken, setSongkickToken] = useState([]);
+  const [fbToken, setFBToken] = useState([]);
   const [search, setSearch] = useState();
   const [results, setResults] = useState([]);
   const [topTracks, setTopTracks] = useState([]);
@@ -18,15 +19,22 @@ const SpotifySearch = props => {
   const [playerType, setPlayerType] = useState([]);
   const [currentTrack, setCurrentTrack] = useState([]);
   const [events, setEvents] = useState([]);
+  const [FBAudience, setFBAudience] = useState([]);
 
   useEffect(() => {
-    axios
-      .get('/api/token')
+    // Get Spotify Token
+    axios.get('/api/token')
       .then(res => {
         setToken(res.data.token);
+        // Get Songkick Token
         axios.get("/api/songkick")
           .then(res2 => {
             setSongkickToken(res2.data.token);
+          })
+        // Get FB Token
+        axios.get("/api/fb")
+          .then(res3 => {
+            setFBToken(res3.data.token);
           })
       })
       .catch(e => console.log(e));
@@ -39,7 +47,7 @@ const SpotifySearch = props => {
   function handleFormSubmit(event) {
     event.preventDefault();
     
-    // Artist Search
+    // Get Spotify Artist
     axios.get(
       "https://api.spotify.com/v1/search?q="
       + search
@@ -120,6 +128,22 @@ const SpotifySearch = props => {
                 setEvents(res7.data.resultsPage.results.event)
               })
           })
+
+        // Get FB Ads Audience Size
+        axios.get(
+          "https://graph.facebook.com/search?type=adinterest&q=["
+          + search
+          +"]&limit=5&locale=en_US&access_token="
+          + fbToken
+        )
+          .then(res7 => {
+            setFBAudience(res7.data.data.filter(result => result.name.length === search.length)[0].audience_size.toLocaleString());
+          })
+
+        axios.get("/api/google/" + search)
+          .then(res8 => {
+            console.log(res8);
+          })
       })
       .catch(err => console.log(err));
   };
@@ -159,10 +183,11 @@ const SpotifySearch = props => {
                     <img className="img-fluid" src={image()} alt={result.name}></img>
                   </div>
                   <div className="col">
-                    <h5><a target="_blank" rel="noopener noreferrer" href={result.external_urls.spotify}>{result.name}</a></h5>
+                    <h2><a target="_blank" rel="noopener noreferrer" href={result.external_urls.spotify}>{result.name}</a></h2>
                     <p><strong>Followers: </strong>{numberWithCommas(result.followers.total)}</p>
                     <p><strong>Popularity: </strong>{result.popularity}</p>
                     <p><strong>Genres: </strong>{result.genres.join(", ")}</p>
+                    <p><strong>FB Ads Audience: </strong>{FBAudience}</p>
                   </div> 
                   <a href={result.external_urls.spotify} target="_blank" rel="noopener noreferrer"><img src="/spotify_icon.svg" title="View on Spotify.com" alt="spotify-icon" id="spotify-icon"></img></a>
                 </div>
@@ -208,8 +233,10 @@ const SpotifySearch = props => {
                         }} className="artist">
                           <li className="list-group-item">
                             <img src={artist.images[2].url} className="artist-img" alt={artist.name}></img>
+                            <div>
                             <p className="artist-name">{artist.name}</p>
-                            <p className="followers">Followers: {artist.followers.total.toLocaleString()}</p>
+                            <p className="sub-text">Followers: {artist.followers.total.toLocaleString()}</p>
+                            </div>
                           </li>
                         </a>
                       ))}
@@ -224,6 +251,9 @@ const SpotifySearch = props => {
                           <li className="list-group-item">
                             <img src={track.album.images[2].url} className="track-img" alt={track.name}></img>
                             <p>{track.name}</p>
+                            <p className="sub-text">{track.artists.map(artist => (
+                              <span key={artist.id}>{artist.name},{" "}</span>
+                            ))}</p>
                           </li>
                         </a>
                       ))}
@@ -272,4 +302,4 @@ const SpotifySearch = props => {
   );
 };
 
-export default SpotifySearch;
+export default Main;

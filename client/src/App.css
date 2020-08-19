@@ -7,6 +7,10 @@ a, h1, h2, h3, h4, h5 {
   color:#1DB954;
 }
 
+a:link {
+  text-decoration: none;
+}
+
 ul {
   list-style: none;
   line-height: 30px;
@@ -88,6 +92,7 @@ ul, .row, .col {
   border: 2px solid #1DB954;
   background-color: #f1ffe6;
   cursor: pointer;
+  box-shadow: 0px 5px 20px #616161;
 }
 
 .list-group-item {
@@ -97,18 +102,24 @@ ul, .row, .col {
 
 .profile-img {
   max-width: 256px;
+  margin: 10px 15px 15px 15px;
 }
 
-.artist-img {
-  border-radius: 32px 32px 32px 32px;
-  margin: 5px;
+.profile-img img {
+  box-shadow: 0px 10px 30px #616161;
 }
 
 .artist-img, .track-img {
+  object-fit: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin: 5px;
   max-width: 50px;
   min-height: 100%;
   margin-right: 10px;
   float: left;
+  box-shadow: 0px 5px 5px #616161;
 }
 
 .latest-release {
@@ -145,7 +156,7 @@ ul, .row, .col {
   color: #252525;
 }
 
-.followers {
+.sub-text {
   font-size: 14px;
 }
 
@@ -158,6 +169,7 @@ ul, .row, .col {
   height: 80px;
   z-index: 10;
   box-shadow: 0px 0px 30px #151515;
+  outline: 4px solid #1DB954;
 }
 
 #current-track {
@@ -186,6 +198,12 @@ ul, .row, .col {
 
 @media only screen and (max-width: 1200px) {
   #compare {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 440px) {
+  #spotify-icon {
     display: none;
   }
 }

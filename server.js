@@ -4,6 +4,7 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3001;
 const request = require('request');
+const googleTrends = require("google-trends-api");
 
 //! api routes
 
@@ -35,6 +36,24 @@ app.get('/api/token', (req, res) => {
 app.get("/api/songkick", (req, res) => {
   res.json({ token: process.env.SONGKICK_API_KEY});
 });
+
+app.get("/api/fb", (req, res) => {
+  res.json({ token: process.env.FB_API_KEY});
+});
+
+app.get("/api/google/:search", (req, res) => {
+  // Get Google Trend
+  let query = {
+    keyword: req.params.search
+  };
+  googleTrends.interestOverTime(query)
+    .then(result => {
+      res.json(result);
+    })
+    .catch(err => {
+      console.error('Oh no there was an error', err);
+    });
+})
 
 // serve static assets
 if (process.env.NODE_ENV === 'production') {

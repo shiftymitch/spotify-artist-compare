@@ -161,6 +161,24 @@ const Main = props => {
     }
   }
 
+  function googleTrendAverage() {
+    return [
+      googleTrend[0].formattedValue[0], 
+      googleTrend[1].formattedValue[0], 
+      googleTrend[2].formattedValue[0], 
+      googleTrend[3].formattedValue[0],
+      googleTrend[4].formattedValue[0],
+      googleTrend[5].formattedValue[0],
+      googleTrend[6].formattedValue[0],
+      googleTrend[7].formattedValue[0]
+    ];
+  }
+
+  function getArtists(track) {
+    let artists = track.artists.map(artist => artist.name);
+    return artists.join(", ");
+  }
+
   return (
     <div>
       <Container>
@@ -184,14 +202,39 @@ const Main = props => {
                     <img className="img-fluid" src={image()} alt={result.name}></img>
                   </div>
                   <div className="col">
-                    <h2><a target="_blank" rel="noopener noreferrer" href={result.external_urls.spotify}>{result.name}</a></h2>
+                    <h2><a href={result.external_urls.spotify} target="_blank" rel="noopener noreferrer" >{result.name}</a></h2>
                     <p><strong>Followers: </strong>{numberWithCommas(result.followers.total)}</p>
-                    <p><strong>Popularity: </strong>{result.popularity}</p>
                     <p><strong>Genres: </strong>{result.genres.join(", ")}</p>
-                    <p><strong>FB Ads Audience: </strong>{FBAudience[0] == null ? "N/A" : FBAudience[0].audience_size.toLocaleString()}</p>
-                    <p><strong>Google Search Trend: </strong><span>{googleTrend[0] == null ? "N/A" : googleTrend[0].formattedValue[0]} | {googleTrend[0] == null ? "N/A" : googleTrend[0].formattedValue[0] - googleTrend[3].formattedValue[0]}</span></p>
+                    <div className="social-links">
+                      <a href={"https://www.facebook.com/search/top/?q=" + search + "&opensearch=1"} target="_blank" rel="noopener noreferrer" > <i className="fa fa-facebook" ></i></a>
+                      <a href={"https://twitter.com/search?q=" + search} target="_blank" rel="noopener noreferrer" > <i className="fa fa-twitter" ></i></a>
+                      <a href={"https://google.com/search?q=" + search + "instagram"} target="_blank" rel="noopener noreferrer" > <i className="fa fa-instagram" ></i></a>
+                      <a href={"https://soundcloud.com/search?q=" + search} target="_blank" rel="noopener noreferrer" > <i className="fa fa-soundcloud" ></i></a>
+                    </div>
                   </div> 
-                  <a href={result.external_urls.spotify} target="_blank" rel="noopener noreferrer"><img src="/spotify_icon.svg" title="View on Spotify.com" alt="spotify-icon" id="spotify-icon"></img></a>
+                <a href={result.external_urls.spotify} target="_blank" rel="noopener noreferrer"><img src="/spotify_icon.svg" title="View on Spotify.com" alt="spotify-icon" id="spotify-icon"></img></a>
+                </div>
+                <div className="row">
+                  <div className="col data">
+                    <p><strong>Popularity:</strong> <i title="Spotify Rank" className="fa fa-question-circle-o"></i></p>
+                    <p>{result.popularity}</p>
+                  </div>
+                  <div className="col data">
+                    <p><strong>FB Ads Audience:</strong> <i title="Global reachable interest audience with Facebook Ads" className="fa fa-question-circle-o"></i></p>
+                    <p>{FBAudience[0] == null ? "N/A" : FBAudience[0].audience_size.toLocaleString()}</p>
+                  </div>
+                  <div className="col data">
+                    <p><strong>Search Trend: </strong><i title="Google search trend: Scale: 1-100 compared to most searched time." className="fa fa-question-circle-o"></i></p>
+                    <div className="trend-container">
+                      <p>
+                        <div id="trend" className="trend">{googleTrend[0] == null ? "N/A" : googleTrendAverage().join(", ")}</div>
+                      </p>
+                      <p className="trend-helper">
+                        <span>Last Week</span>
+                        <span>8 Weeks Ago</span>
+                      </p>
+                    </div>
+                  </div>
                 </div>
                 <br></br>
                 <div className="row">
@@ -204,7 +247,7 @@ const Main = props => {
                       <div className="latest-release">
                         <img src={latestRelease.images == null ? "" : latestRelease.images[2].url} className="latest-img" alt={latestRelease.name}></img>
                         <p>{latestRelease.name}</p>
-                        <p>{latestRelease.release_date == null ? "N/A" : moment(latestRelease.release_date).format("MMM Do, YYYY")}</p>
+                        <p className="sub-text">{latestRelease.release_date == null ? "N/A" : moment(latestRelease.release_date).format("MMM Do, YYYY")}</p>
                       </div>
                     </a>
                   </div>
@@ -214,7 +257,7 @@ const Main = props => {
                       <div className="latest-release">
                         <img src="https://assets.sk-static.com/assets/images/nw/static-pages/styleguide/sk-black-badge.320daf9f279a7a0046acd0e8daed4987.jpg" id="icon" alt="songkick icon"></img>
                         <p>{!events[0] ? "N/A" : events[0].location.city}</p>
-                        <p>{!events[0] ? "N/A" : moment(events[0].start.date).format("MMM Do, YYYY")}</p>
+                        <p className="sub-text">{!events[0] ? "N/A" : moment(events[0].start.date).format("MMM Do, YYYY")}</p>
                       </div>
                     </a>
                   </div>
@@ -253,9 +296,7 @@ const Main = props => {
                           <li className="list-group-item">
                             <img src={track.album.images[2].url} className="track-img" alt={track.name}></img>
                             <p>{track.name}</p>
-                            <p className="sub-text">{track.artists.map(artist => (
-                              <span key={artist.id}>{artist.name},{" "}</span>
-                            ))}</p>
+                            <p className="sub-text">{getArtists(track)}</p>
                           </li>
                         </a>
                       ))}
@@ -268,8 +309,9 @@ const Main = props => {
                           setCurrentTrack(track.id);
                         }}>
                           <li className="list-group-item">
-                            <img src={track.album.images[2].url} className="track-img" alt={track.name}></img>
+                            <img src={track.album.images[2] == null ? "N/A" : track.album.images[2].url} className="track-img" alt={track.name}></img>
                             <p>{track.name}</p>
+                            <p className="sub-text">{getArtists(track)}</p>
                           </li>
                         </a>
                       ))}
@@ -283,7 +325,7 @@ const Main = props => {
                           <li className="list-group-item">
                             <img src="https://assets.sk-static.com/assets/images/nw/static-pages/styleguide/sk-black-badge.320daf9f279a7a0046acd0e8daed4987.jpg" id="icon" alt="songkick icon"></img>
                             <p>{event.location.city}</p>
-                            <p>{moment(event.start.date).format("MMM Do, YYYY")}</p>
+                            <p className="sub-text">{moment(event.start.date).format("MMM Do, YYYY")}</p>
                           </li>
                         </a>
                       ))}

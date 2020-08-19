@@ -72,6 +72,15 @@ ul, .row, .col {
   margin-right: 10px;
 }
 
+.fa {
+  color: #a8a8a8;
+  padding: 5px;
+}
+
+.fa:hover {
+  color: #1DB954;
+}
+
 .related-artists, .track-results, .remixes, .events, .latest-release {
   color: black;
   padding: 15px 10px;
@@ -107,19 +116,28 @@ ul, .row, .col {
 
 .profile-img img {
   box-shadow: 0px 10px 30px #616161;
+  border: 4px #1DB954;
+  border-style: outset inset;
+  border-radius: 14px;
+}
+
+.data {
+  padding: 5px;
+}
+
+.artist-img {
+  border-radius: 50%;
 }
 
 .artist-img, .track-img {
   object-fit: cover;
   width: 50px;
   height: 50px;
-  border-radius: 50%;
   margin: 5px;
   max-width: 50px;
   min-height: 100%;
   margin-right: 10px;
   float: left;
-  box-shadow: 0px 5px 5px #616161;
 }
 
 .latest-release {
@@ -169,11 +187,34 @@ ul, .row, .col {
   height: 80px;
   z-index: 10;
   box-shadow: 0px 0px 30px #151515;
-  outline: 4px solid #1DB954;
+  border: 2px solid #1DB954;
+  border-radius: 8px;
+  
 }
 
 #current-track {
   display: block;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.trend-container {
+  width: auto;
+}
+
+.trend {
+  background-image: linear-gradient(to right, white, #1DB954);
+  border: 2px solid #929292;
+  padding: 0px 5px;
+  text-align: center;
+}
+
+.trend-helper {
+  display: flex;
+  justify-content: space-between;
+  max-width: 100%;
+  font-size: 11px;
+  line-height:11px;
 }
 
 .footer {

@@ -49,12 +49,6 @@ hr {
   border-color: #1DB954;
 }
 
-.search {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-}
-
 .search button {
   margin-top: 10px;
 }

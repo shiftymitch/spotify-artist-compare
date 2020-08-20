@@ -49,6 +49,33 @@ hr {
   border-color: #1DB954;
 }
 
+.search {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.search button {
+  margin-top: 10px;
+}
+
+.login-helper p {
+  color: #1DB954;
+  font-size: 11px;
+  text-align: center;
+  padding-bottom: 15px;
+}
+
+.login-helper p i {
+  color: #1DB954;
+  font-size: 40px;
+  padding-bottom: 0px;
+}
+
+#lightbulb {
+  padding-bottom: 0;
+}
+
 .search-results {
   padding-bottom: 100px;
 }
@@ -81,22 +108,26 @@ ul, .row, .col {
   color: #1DB954;
 }
 
-.related-artists, .track-results, .remixes, .events, .latest-release {
+.related-artists, 
+.track-results, 
+.remixes, 
+.events, 
+.latest-release {
   color: black;
   padding: 15px 10px;
   margin-right: 25px;
 }
 
-.track, .artist {
+.track, 
+.artist {
   display: inline-block;
   width: 100%;
-}
-
-.track, .artist {
   margin-bottom: 5px;
 }
 
-.track li:hover, .latest-release:hover, .artist li:hover {
+.track li:hover, 
+.latest-release:hover, 
+.artist li:hover {
   border-style: inset;
   border: 2px solid #1DB954;
   background-color: #f1ffe6;
@@ -116,13 +147,26 @@ ul, .row, .col {
 
 .profile-img img {
   box-shadow: 0px 10px 30px #616161;
-  border: 4px #1DB954;
-  border-style: outset inset;
-  border-radius: 14px;
+  border: 6px #252525;
+  border-style: none solid double none;
+  border-radius: 10px;
+}
+
+.main-artist-name {
+  margin-top: 15px;
+  color: #1DB954;
 }
 
 .data {
   padding: 5px;
+  border: 1px solid #e2e2e2;
+  margin: 15px;
+  padding: 0px 15px 10px 15px;
+  border-radius: 5px;
+}
+
+.data p {
+  
 }
 
 .artist-img {
@@ -207,6 +251,7 @@ ul, .row, .col {
   border: 2px solid #929292;
   padding: 0px 5px;
   text-align: center;
+  color: black;
 }
 
 .trend-helper {

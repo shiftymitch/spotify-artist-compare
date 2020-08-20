@@ -202,13 +202,13 @@ const Main = props => {
                     <img className="img-fluid" src={image()} alt={result.name}></img>
                   </div>
                   <div className="col">
-                    <h2><a href={result.external_urls.spotify} target="_blank" rel="noopener noreferrer" >{result.name}</a></h2>
+                    <h2 className="main-artist-name">{result.name}</h2>
                     <p><strong>Followers: </strong>{numberWithCommas(result.followers.total)}</p>
                     <p><strong>Genres: </strong>{result.genres.join(", ")}</p>
                     <div className="social-links">
                       <a href={"https://www.facebook.com/search/top/?q=" + search + "&opensearch=1"} target="_blank" rel="noopener noreferrer" > <i className="fa fa-facebook" ></i></a>
                       <a href={"https://twitter.com/search?q=" + search + "&f=user"} target="_blank" rel="noopener noreferrer" > <i className="fa fa-twitter" ></i></a>
-                      <a href={"https://google.com/search?q=" + search + "+instagram"} target="_blank" rel="noopener noreferrer" > <i className="fa fa-instagram" ></i></a>
+                      <a href={`https://google.com/search?q=${search}+instagram`} target="_blank" rel="noopener noreferrer" > <i className="fa fa-instagram" ></i></a>
                       <a href={"https://soundcloud.com/search?q=" + search} target="_blank" rel="noopener noreferrer" > <i className="fa fa-soundcloud" ></i></a>
                     </div>
                   </div> 
@@ -224,11 +224,11 @@ const Main = props => {
                     <p>{FBAudience[0] == null ? "N/A" : FBAudience[0].audience_size.toLocaleString()}</p>
                   </div>
                   <div className="col data">
-                    <p><strong>Search Trend: </strong><i title="Google search trend: Scale: 1-100 compared to most searched time." className="fa fa-question-circle-o"></i></p>
+                    <p><strong>Search Trend: </strong><i title="Google Trend. Scale: 1-100 compared to artist's most-searched period." className="fa fa-question-circle-o"></i></p>
                     <div className="trend-container">
-                      <p>
+                      <div>
                         <div id="trend" className="trend">{googleTrend[0] == null ? "N/A" : googleTrendAverage().join(", ")}</div>
-                      </p>
+                      </div>
                       <p className="trend-helper">
                         <span>Last Week</span>
                         <span>8 Weeks Ago</span>

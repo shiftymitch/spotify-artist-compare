@@ -203,7 +203,6 @@ const Main = props => {
                   </div>
                   <div className="col">
                     <h2 className="main-artist-name">{result.name}</h2>
-                    <p><strong>Followers: </strong>{numberWithCommas(result.followers.total)}</p>
                     <p><strong>Genres: </strong>{result.genres.join(", ")}</p>
                     <div className="social-links">
                       <a href={"https://www.facebook.com/search/top/?q=" + search + "&opensearch=1"} target="_blank" rel="noopener noreferrer" > <i className="fa fa-facebook" ></i></a>
@@ -214,52 +213,60 @@ const Main = props => {
                   </div> 
                 <a href={result.external_urls.spotify} target="_blank" rel="noopener noreferrer"><img src="/spotify_icon.svg" title="View on Spotify.com" alt="spotify-icon" id="spotify-icon"></img></a>
                 </div>
-                <div className="row">
-                  <div className="col data">
-                    <p><strong>Popularity:</strong> <i title="Spotify Rank" className="fa fa-question-circle-o"></i></p>
-                    <p>{result.popularity}</p>
-                  </div>
-                  <div className="col data">
-                    <p><strong>FB Ads Audience:</strong> <i title="Global reachable interest audience with Facebook Ads" className="fa fa-question-circle-o"></i></p>
-                    <p>{FBAudience[0] == null ? "N/A" : FBAudience[0].audience_size.toLocaleString()}</p>
-                  </div>
-                  <div className="col data">
-                    <p><strong>Search Trend: </strong><i title="Google Trend. Scale: 1-100 compared to artist's most-searched period." className="fa fa-question-circle-o"></i></p>
-                    <div className="trend-container">
-                      <div>
-                        <div id="trend" className="trend">{googleTrend[0] == null ? "N/A" : googleTrendAverage().join(", ")}</div>
+                <div className="container-fluid">
+                  <div className="row">
+                    <div className="col data">
+                      <h6><strong>Followers:</strong> <i title="Total Spotify Followers" className="fa fa-question-circle-o"></i></h6>
+                      <p>{numberWithCommas(result.followers.total)}</p>
+                    </div>
+                    <div className="col data">
+                      <h6><strong>Popularity:</strong> <i title="Spotify Rank" className="fa fa-question-circle-o"></i></h6>
+                      <p>{result.popularity}</p>
+                    </div>
+                    <div className="col data">
+                      <h6><strong>FB Ads Audience:</strong> <i title="Global reachable interest audience with Facebook Ads" className="fa fa-question-circle-o"></i></h6>
+                      <p>{FBAudience[0] == null ? "N/A" : FBAudience[0].audience_size.toLocaleString()}</p>
+                    </div>
+                    <div className="col data">
+                      <h6><strong>Search Trend: </strong><i title="Google Trend. Scale: 1-100 compared to artist's most-searched period." className="fa fa-question-circle-o"></i></h6>
+                      <div className="trend-container">
+                        <div>
+                          <div id="trend" className="trend text-nowrap">{googleTrend[0] == null ? "N/A" : googleTrendAverage().join(", ")}</div>
+                        </div>
+                        <p className="trend-helper">
+                          <span>Last Week</span>
+                          <span>8 Weeks Ago</span>
+                        </p>
                       </div>
-                      <p className="trend-helper">
-                        <span>Last Week</span>
-                        <span>8 Weeks Ago</span>
-                      </p>
                     </div>
                   </div>
                 </div>
                 <br></br>
-                <div className="row">
-                  <div className="col">
-                    <p><strong>Last Release:</strong></p>
-                    <a key={latestRelease.id} className="track" onClick={() => {
-                      setPlayerType("album")
-                      setCurrentTrack(latestRelease.id);
-                    }} >
-                      <div className="latest-release">
-                        <img src={latestRelease.images == null ? "" : latestRelease.images[2].url} className="latest-img" alt={latestRelease.name}></img>
-                        <p>{latestRelease.name}</p>
-                        <p className="sub-text">{latestRelease.release_date == null ? "N/A" : moment(latestRelease.release_date).format("MMM Do, YYYY")}</p>
-                      </div>
-                    </a>
-                  </div>
-                  <div className="col">
-                    <p><strong>Last Event:</strong></p>
-                    <a href={!events[0] ? "N/A" : events[0].uri} target="_blank" rel="noopener noreferrer">
-                      <div className="latest-release">
-                        <img src="https://assets.sk-static.com/assets/images/nw/static-pages/styleguide/sk-black-badge.320daf9f279a7a0046acd0e8daed4987.jpg" id="icon" alt="songkick icon"></img>
-                        <p>{!events[0] ? "N/A" : events[0].location.city}</p>
-                        <p className="sub-text">{!events[0] ? "N/A" : moment(events[0].start.date).format("MMM Do, YYYY")}</p>
-                      </div>
-                    </a>
+                <div className="container-fluid">
+                  <div className="row">
+                    <div className="col">
+                      <p><strong>Last Release:</strong></p>
+                      <a key={latestRelease.id} className="track" onClick={() => {
+                        setPlayerType("album")
+                        setCurrentTrack(latestRelease.id);
+                      }} >
+                        <div className="latest-release">
+                          <img src={latestRelease.images == null ? "" : latestRelease.images[2].url} className="latest-img" alt={latestRelease.name}></img>
+                          <p>{latestRelease.name}</p>
+                          <p className="sub-text">{latestRelease.release_date == null ? "N/A" : moment(latestRelease.release_date).format("MMM Do, YYYY")}</p>
+                        </div>
+                      </a>
+                    </div>
+                    <div className="col">
+                      <p><strong>Last Event:</strong></p>
+                      <a href={!events[0] ? "N/A" : events[0].uri} target="_blank" rel="noopener noreferrer">
+                        <div className="latest-release">
+                          <img src="https://assets.sk-static.com/assets/images/nw/static-pages/styleguide/sk-black-badge.320daf9f279a7a0046acd0e8daed4987.jpg" id="icon" alt="songkick icon"></img>
+                          <p>{!events[0] ? "N/A" : events[0].location.city}</p>
+                          <p className="sub-text">{!events[0] ? "N/A" : moment(events[0].start.date).format("MMM Do, YYYY")}</p>
+                        </div>
+                      </a>
+                    </div>
                   </div>
                 </div>
                 <hr></hr>

@@ -26,16 +26,20 @@ hr {
   justify-content: space-between;
 }
 
-.navbar-brand #spotify-icon{
-  float: left;
-}
-
-.navbar-brand #navbar-name {
-  color: white;
-}
-
 .navbar-brand {
   max-width: 200px;
+}
+
+#navbar-icon {
+  float: left;
+  max-height: 35px;
+  margin-right: 10px;
+}
+
+#navbar-name {
+  color: #1DB954;
+  font-size: 2rem;
+  margin-left: 50px;
 }
 
 .btn-outline-success {
@@ -47,6 +51,20 @@ hr {
   background-color: #f9f9f9;
   color:#252525;
   border-color: #1DB954;
+}
+
+#mainSearch, #main1, #main2, #main3 {
+  display: none;
+  border: 2px solid #31f074;
+  background-color: #252525;
+  border-radius: 10px;
+  height: auto;
+  padding: 15px;
+  box-shadow: 0px 150px 40px #ffffff;
+}
+
+#search-headerSearch, #search-header1, #search-header2, #search-header3 {
+  margin-top: 250px;
 }
 
 .search button {
@@ -64,10 +82,6 @@ hr {
   color: #1DB954;
   font-size: 40px;
   padding-bottom: 0px;
-}
-
-#lightbulb {
-  padding-bottom: 0;
 }
 
 .search-results {
@@ -89,7 +103,7 @@ ul, .row, .col {
 
 #spotify-icon {
   float: right;
-  max-height: 35px;
+  max-height: 25px;
   margin-right: 10px;
 }
 
@@ -135,7 +149,8 @@ ul, .row, .col {
 }
 
 .profile-img {
-  max-width: 256px;
+  object-fit: cover;
+  max-width: 270px;
   margin: 10px 15px 15px 15px;
 }
 
@@ -150,7 +165,6 @@ ul, .row, .col {
 }
 
 .profile-img img {
-  /* box-shadow: 0px 10px 30px #616161; */
   border: 6px #252525;
   border-style: solid solid none solid;
   border-radius: 10px;
@@ -215,6 +229,10 @@ ul, .row, .col {
   float: left;
   width: 64px;
   margin-right: 15px;
+}
+
+.social-links {
+  margin-bottom: 25px;
 }
 
 .latest-img {
@@ -299,22 +317,29 @@ ul, .row, .col {
 }
 
 @media only screen and (max-width: 1200px) {
-  #compare {
+  #compare, #login, #spotify-icon {
     display: none;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .navbar {
+    display: flex;
+    justify-content: center;
+  }
+
+  #navbar-name {
+    margin-left: 0;
   }
 }
 
 @media only screen and (max-width: 440px) {
-  #spotify-icon {
-    display: none;
-  }
 
-  .profile-img::after {
-    background-image: none;
-  }
-
-  .profile-img img {
-    border: none;
-    border-radius: 5px;
+  .profile-img {
+    padding-right: 0;
   }
 }

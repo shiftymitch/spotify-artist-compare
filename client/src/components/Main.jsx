@@ -147,6 +147,9 @@ const Main = props => {
           })
       })
       .catch(err => console.log(err));
+
+      document.getElementById("main" + props.artistCount).style.display = "block";
+      document.getElementById("search-header" + props.artistCount).style.marginTop = "15px";
   };
 
   function numberWithCommas(x) {
@@ -182,171 +185,173 @@ const Main = props => {
   return (
     <div>
       <Container>
-        <h3 id="search-header" className="text-center">Artist {props.artistCount}</h3>
+        <h3 id={"search-header" + props.artistCount} className="text-center">Artist {props.artistCount}</h3>
         <SearchForm
           handleFormSubmit={handleFormSubmit}
           handleInputChange={handleInputChange}
           count={props.artistCount}
         />
-        {/* Music Player */}
-        <div className="current-track sticky-top">
-          <iframe id="current-track" title="current-track" src={"https://open.spotify.com/embed/" + playerType + "/" + currentTrack} width="100%" height="100%" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-        </div>
-        {/* Search Results */}
-        <div className="d-flex justify-content-around">
-          <ul className="search-results">
-            {results.slice(0, 1).map(result => (
-              <li key={result.id} className="list-group-item">
-                <div className="row">
-                  <div className="col-4 profile-img">
-                    <img className="img-fluid" src={image()} alt={result.name}></img>
+        <div id={"main" + props.artistCount}>
+          {/* Music Player */}
+          <div id="music-player" className="current-track sticky-top">
+            <iframe id="current-track" title="current-track" src={"https://open.spotify.com/embed/" + playerType + "/" + currentTrack} width="100%" height="100%" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+          </div>
+          {/* Search Results */}
+          <div className="d-flex justify-content-around">
+            <ul className="search-results">
+              {results.slice(0, 1).map(result => (
+                <li key={result.id} className="list-group-item">
+                  <div className="row header">
+                    <div className="profile-img">
+                      <img className="img-fluid" src={image()} alt={result.name}></img>
+                    </div>
+                    <div className="col">
+                      <h2 className="main-artist-name">{result.name}</h2>
+                      <p><strong>Genres: </strong>{result.genres.join(", ")}</p>
+                      <div className="social-links">
+                        <a href={"https://www.facebook.com/search/pages/?q=" + search} target="_blank" rel="noopener noreferrer" > <i className="fa fa-facebook" ></i></a>
+                        <a href={`https://twitter.com/search?q=${search}&f=user`} target="_blank" rel="noopener noreferrer" > <i className="fa fa-twitter" ></i></a>
+                        <a href={`https://google.com/search?q=${search}+instagram`} target="_blank" rel="noopener noreferrer" > <i className="fa fa-instagram" ></i></a>
+                        <a href={"https://soundcloud.com/search?q=" + search} target="_blank" rel="noopener noreferrer" > <i className="fa fa-soundcloud" ></i></a>
+                      </div>
+                    </div> 
+                  <a href={result.external_urls.spotify} target="_blank" rel="noopener noreferrer"><img src="/spotify_icon.svg" title="View on Spotify.com" alt="spotify-icon" id="spotify-icon"></img></a>
                   </div>
-                  <div className="col">
-                    <h2 className="main-artist-name">{result.name}</h2>
-                    <p><strong>Genres: </strong>{result.genres.join(", ")}</p>
-                    <div className="social-links">
-                      <a href={"https://www.facebook.com/search/top/?q=" + search + "&opensearch=1"} target="_blank" rel="noopener noreferrer" > <i className="fa fa-facebook" ></i></a>
-                      <a href={"https://twitter.com/search?q=" + search + "&f=user"} target="_blank" rel="noopener noreferrer" > <i className="fa fa-twitter" ></i></a>
-                      <a href={`https://google.com/search?q=${search}+instagram`} target="_blank" rel="noopener noreferrer" > <i className="fa fa-instagram" ></i></a>
-                      <a href={"https://soundcloud.com/search?q=" + search} target="_blank" rel="noopener noreferrer" > <i className="fa fa-soundcloud" ></i></a>
-                    </div>
-                  </div> 
-                <a href={result.external_urls.spotify} target="_blank" rel="noopener noreferrer"><img src="/spotify_icon.svg" title="View on Spotify.com" alt="spotify-icon" id="spotify-icon"></img></a>
-                </div>
-                <div className="container-fluid">
-                  <div className="row">
-                    <div className="col data">
-                      <h6><strong>Followers:</strong> <i title="Total Spotify Followers" className="fa fa-question-circle-o"></i></h6>
-                      <p>{numberWithCommas(result.followers.total)}</p>
-                    </div>
-                    <div className="col data">
-                      <h6><strong>Popularity:</strong> <i title="Spotify Rank" className="fa fa-question-circle-o"></i></h6>
-                      <p>{result.popularity}</p>
-                    </div>
-                    <div className="col data">
-                      <h6><strong>FB Ads Audience:</strong> <i title="Global reachable interest audience with Facebook Ads" className="fa fa-question-circle-o"></i></h6>
-                      <p>{FBAudience[0] == null ? "N/A" : FBAudience[0].audience_size.toLocaleString()}</p>
-                    </div>
-                    <div className="col data">
-                      <h6><strong>Search Trend: </strong><i title="Google Trend. Scale: 1-100 compared to artist's most-searched period." className="fa fa-question-circle-o"></i></h6>
-                      <div className="trend-container">
-                        <div>
-                          <div id="trend" className="trend text-nowrap">{googleTrend[0] == null ? "N/A" : googleTrendAverage().join(", ")}</div>
+                  <div className="container-fluid">
+                    <div className="row">
+                      <div className="col data">
+                        <h6><strong>Followers:</strong> <i title="Total Spotify Followers" className="fa fa-question-circle-o"></i></h6>
+                        <p>{numberWithCommas(result.followers.total)}</p>
+                      </div>
+                      <div className="col data">
+                        <h6><strong>Popularity:</strong> <i title="Spotify Rank" className="fa fa-question-circle-o"></i></h6>
+                        <p>{result.popularity}</p>
+                      </div>
+                      <div className="col data">
+                        <h6><strong>FB Ads Audience:</strong> <i title="Global reachable interest audience with Facebook Ads" className="fa fa-question-circle-o"></i></h6>
+                        <p>{FBAudience[0] == null ? "N/A" : FBAudience[0].audience_size.toLocaleString()}</p>
+                      </div>
+                      <div className="col data">
+                        <h6><strong>Search Trend: </strong><i title="Google Trend. Scale: 1-100 compared to artist's most-searched period." className="fa fa-question-circle-o"></i></h6>
+                        <div className="trend-container">
+                          <div>
+                            <div id="trend" className="trend text-nowrap">{googleTrend[0] == null ? "N/A" : googleTrendAverage().join(", ")}</div>
+                          </div>
+                          <p className="trend-helper">
+                            <span>Last Week</span>
+                            <span>8 Weeks Ago</span>
+                          </p>
                         </div>
-                        <p className="trend-helper">
-                          <span>Last Week</span>
-                          <span>8 Weeks Ago</span>
-                        </p>
                       </div>
                     </div>
                   </div>
-                </div>
-                <br></br>
-                <div className="container-fluid">
+                  <br></br>
+                  <div className="container-fluid">
+                    <div className="row">
+                      <div className="col">
+                        <p><strong>Last Release:</strong></p>
+                        <a key={latestRelease.id} className="track" onClick={() => {
+                          setPlayerType("album")
+                          setCurrentTrack(latestRelease.id);
+                        }} >
+                          <div className="latest-release">
+                            <img src={latestRelease.images == null ? "" : latestRelease.images[2].url} className="latest-img" alt={latestRelease.name}></img>
+                            <p>{latestRelease.name}</p>
+                            <p className="sub-text">{latestRelease.release_date == null ? "N/A" : moment(latestRelease.release_date).format("MMM Do, YYYY")}</p>
+                          </div>
+                        </a>
+                      </div>
+                      <div className="col">
+                        <p><strong>Last Event:</strong></p>
+                        <a href={!events[0] ? "N/A" : events[0].uri} target="_blank" rel="noopener noreferrer">
+                          <div className="latest-release">
+                            <img src="https://assets.sk-static.com/assets/images/nw/static-pages/styleguide/sk-black-badge.320daf9f279a7a0046acd0e8daed4987.jpg" id="icon" alt="songkick icon"></img>
+                            <p>{!events[0] ? "N/A" : events[0].location.city}</p>
+                            <p className="sub-text">{!events[0] ? "N/A" : moment(events[0].start.date).format("MMM Do, YYYY")}</p>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <hr></hr>
                   <div className="row">
                     <div className="col">
-                      <p><strong>Last Release:</strong></p>
-                      <a key={latestRelease.id} className="track" onClick={() => {
-                        setPlayerType("album")
-                        setCurrentTrack(latestRelease.id);
-                      }} >
-                        <div className="latest-release">
-                          <img src={latestRelease.images == null ? "" : latestRelease.images[2].url} className="latest-img" alt={latestRelease.name}></img>
-                          <p>{latestRelease.name}</p>
-                          <p className="sub-text">{latestRelease.release_date == null ? "N/A" : moment(latestRelease.release_date).format("MMM Do, YYYY")}</p>
-                        </div>
-                      </a>
+                      <ul className="related-artists mb-5">
+                        <h3>Related Artists:</h3>
+                        {relatedArtists.map(artist => (
+                          <a key={artist.id} onClick={() => {
+                            document.getElementById("search-" + props.artistCount).value = artist.name;
+                            setSearch(artist.name);
+                            setTimeout(() => {
+                              document.getElementById("search-btn-" + props.artistCount).click();
+                              window.scrollTo(0, 0);
+                            }, 500);
+                          }} className="artist">
+                            <li className="list-group-item">
+                              <img src={artist.images[2].url} className="artist-img" alt={artist.name}></img>
+                              <div>
+                              <p className="artist-name">{artist.name}</p>
+                              <p className="sub-text">Followers: {artist.followers.total.toLocaleString()}</p>
+                              </div>
+                            </li>
+                          </a>
+                        ))}
+                      </ul>
+                      <ul className="track-results mb-5">
+                        <h3>Top Tracks:</h3>
+                        {topTracks == null ? "" : topTracks.map(track => (
+                          <a key={track.id} className="track" onClick={() => {
+                            setPlayerType("track");
+                            setCurrentTrack(track.id);
+                          }} >
+                            <li className="list-group-item">
+                              <img src={track.album.images[2].url} className="track-img" alt={track.name}></img>
+                              <p>{track.name}</p>
+                              <p className="sub-text">{getArtists(track)}</p>
+                            </li>
+                          </a>
+                        ))}
+                      </ul>
+                      <ul className="remixes mb-5">
+                        <h3>Remixes:</h3>
+                        {remixes == null ? "" : remixes.map(track => (
+                          <a key={track.id} className="track" onClick={() => {
+                            setPlayerType("track")
+                            setCurrentTrack(track.id);
+                          }}>
+                            <li className="list-group-item">
+                              <img src={track.album.images[2] == null ? "N/A" : track.album.images[2].url} className="track-img" alt={track.name}></img>
+                              <p>{track.name}</p>
+                              <p className="sub-text">{getArtists(track)}</p>
+                            </li>
+                          </a>
+                        ))}
+                      </ul>
                     </div>
                     <div className="col">
-                      <p><strong>Last Event:</strong></p>
-                      <a href={!events[0] ? "N/A" : events[0].uri} target="_blank" rel="noopener noreferrer">
-                        <div className="latest-release">
-                          <img src="https://assets.sk-static.com/assets/images/nw/static-pages/styleguide/sk-black-badge.320daf9f279a7a0046acd0e8daed4987.jpg" id="icon" alt="songkick icon"></img>
-                          <p>{!events[0] ? "N/A" : events[0].location.city}</p>
-                          <p className="sub-text">{!events[0] ? "N/A" : moment(events[0].start.date).format("MMM Do, YYYY")}</p>
-                        </div>
-                      </a>
+                      <ul className="events mb-5">
+                        <h3>Recent Events:</h3>
+                        {events == null ? "" : events.map(event => (
+                          <a key={event.id} href={event.uri} className="track" target="_blank" rel="noopener noreferrer">
+                            <li className="list-group-item">
+                              <img src="https://assets.sk-static.com/assets/images/nw/static-pages/styleguide/sk-black-badge.320daf9f279a7a0046acd0e8daed4987.jpg" id="icon" alt="songkick icon"></img>
+                              <p>{event.location.city}</p>
+                              <p className="sub-text">{moment(event.start.date).format("MMM Do, YYYY")}</p>
+                            </li>
+                          </a>
+                        ))}
+                      </ul>
                     </div>
                   </div>
-                </div>
-                <hr></hr>
-                <div className="row">
-                  <div className="col">
-                    <ul className="related-artists mb-5">
-                      <h3>Related Artists:</h3>
-                      {relatedArtists.map(artist => (
-                        <a key={artist.id} onClick={() => {
-                          document.getElementById("search-" + props.artistCount).value = artist.name;
-                          setSearch(artist.name);
-                          setTimeout(() => {
-                            document.getElementById("search-btn-" + props.artistCount).click();
-                            window.scrollTo(0, 0);
-                          }, 500);
-                        }} className="artist">
-                          <li className="list-group-item">
-                            <img src={artist.images[2].url} className="artist-img" alt={artist.name}></img>
-                            <div>
-                            <p className="artist-name">{artist.name}</p>
-                            <p className="sub-text">Followers: {artist.followers.total.toLocaleString()}</p>
-                            </div>
-                          </li>
-                        </a>
-                      ))}
-                    </ul>
-                    <ul className="track-results mb-5">
-                      <h3>Top Tracks:</h3>
-                      {topTracks == null ? "" : topTracks.map(track => (
-                        <a key={track.id} className="track" onClick={() => {
-                          setPlayerType("track");
-                          setCurrentTrack(track.id);
-                        }} >
-                          <li className="list-group-item">
-                            <img src={track.album.images[2].url} className="track-img" alt={track.name}></img>
-                            <p>{track.name}</p>
-                            <p className="sub-text">{getArtists(track)}</p>
-                          </li>
-                        </a>
-                      ))}
-                    </ul>
-                    <ul className="remixes mb-5">
-                      <h3>Remixes:</h3>
-                      {remixes == null ? "" : remixes.map(track => (
-                        <a key={track.id} className="track" onClick={() => {
-                          setPlayerType("track")
-                          setCurrentTrack(track.id);
-                        }}>
-                          <li className="list-group-item">
-                            <img src={track.album.images[2] == null ? "N/A" : track.album.images[2].url} className="track-img" alt={track.name}></img>
-                            <p>{track.name}</p>
-                            <p className="sub-text">{getArtists(track)}</p>
-                          </li>
-                        </a>
-                      ))}
-                    </ul>
+                  <div className="row">
+                    <div className="col">
+                      
+                    </div>
                   </div>
-                  <div className="col">
-                    <ul className="events mb-5">
-                      <h3>Recent Events:</h3>
-                      {events == null ? "" : events.map(event => (
-                        <a key={event.id} href={event.uri} className="track" target="_blank" rel="noopener noreferrer">
-                          <li className="list-group-item">
-                            <img src="https://assets.sk-static.com/assets/images/nw/static-pages/styleguide/sk-black-badge.320daf9f279a7a0046acd0e8daed4987.jpg" id="icon" alt="songkick icon"></img>
-                            <p>{event.location.city}</p>
-                            <p className="sub-text">{moment(event.start.date).format("MMM Do, YYYY")}</p>
-                          </li>
-                        </a>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col">
-                    
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </Container>
     </div>

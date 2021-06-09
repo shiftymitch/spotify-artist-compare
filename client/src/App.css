@@ -316,6 +316,15 @@ ul, .row, .col {
   color: #1DB954;
 }
 
+.left-column {
+  margin-top: 50px;
+  margin-left: 10px;
+}
+
+.left-column p {
+  color: white;
+}
+
 @media only screen and (max-width: 1200px) {
   #compare, #login, #spotify-icon {
     display: none;

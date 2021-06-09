@@ -4,8 +4,6 @@ import Container from "./Container";
 import SearchForm from "./SearchForm";
 import moment from "moment";
 
-document.querySelector(".current-track")
-
 const Main = props => {
   const [token, setToken] = useState([]);
   const [songkickToken, setSongkickToken] = useState([]);
@@ -21,6 +19,7 @@ const Main = props => {
   const [events, setEvents] = useState([]);
   const [FBAudience, setFBAudience] = useState([]);
   const [googleTrend, setGoogleTrend] = useState([]);
+  const [recentlySearched, setRecentlySearched] = useState([]);
 
   useEffect(() => {
     // Get Spotify Token
@@ -47,7 +46,6 @@ const Main = props => {
 
   function handleFormSubmit(event) {
     event.preventDefault();
-    
     // Get Spotify Artist
     axios.get(
       "https://api.spotify.com/v1/search?q="
@@ -183,7 +181,15 @@ const Main = props => {
   }
 
   return (
-    <div>
+    <div className="row">
+      <div className="left-column col-2">
+        <h5 className="mt-5 recently-searched">
+          Recently Searched
+        </h5>
+        {recentlySearched.map(artist => (
+          <p><button id={artist} onClick={handleFormSubmit}>{artist}</button></p>
+        ))}
+      </div>
       <Container>
         <h3 id={"search-header" + props.artistCount} className="text-center">Artist {props.artistCount}</h3>
         <SearchForm
@@ -282,13 +288,14 @@ const Main = props => {
                           <a key={artist.id} onClick={() => {
                             document.getElementById("search-" + props.artistCount).value = artist.name;
                             setSearch(artist.name);
+                            recentlySearched.unshift(search);
                             setTimeout(() => {
                               document.getElementById("search-btn-" + props.artistCount).click();
                               window.scrollTo(0, 0);
                             }, 500);
                           }} className="artist">
                             <li className="list-group-item">
-                              <img src={artist.images[2].url} className="artist-img" alt={artist.name}></img>
+                              <img src={!artist.images[2] ? "" :artist.images[2].url} className="artist-img" alt={artist.name}></img>
                               <div>
                               <p className="artist-name">{artist.name}</p>
                               <p className="sub-text">Followers: {artist.followers.total.toLocaleString()}</p>
@@ -354,6 +361,7 @@ const Main = props => {
           </div>
         </div>
       </Container>
+      <div className="left-column col-2"></div>
     </div>
   );
 };

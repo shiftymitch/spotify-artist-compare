@@ -278,7 +278,7 @@ const Main = props => {
                     <div className="col">
                       <ul className="related-artists mb-5">
                         <h3>Related Artists:</h3>
-                        {relatedArtists.map(artist => (
+                        {relatedArtists.sort((a,b) => b.followers.total-a.followers.total).map(artist => (
                           <a key={artist.id} onClick={() => {
                             document.getElementById("search-" + props.artistCount).value = artist.name;
                             setSearch(artist.name);

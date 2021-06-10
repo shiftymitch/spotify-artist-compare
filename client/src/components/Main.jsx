@@ -207,21 +207,21 @@ const Main = props => {
             <ul className="search-results">
               {results.slice(0, 1).map(result => (
                 <li key={result.id} className="list-group-item">
-                  <div className="row header">
+                  <div className="row header" style={props.align}>
                     <div className="profile-img">
                       <img className="img-fluid" src={image()} alt={result.name}></img>
                     </div>
                     <div className="col">
                       <h2 className="main-artist-name">{result.name}</h2>
-                      <p><strong>Genres: </strong>{result.genres.join(", ")}</p>
-                      <div className="social-links">
+                      <div className="social-links" style={props.align}>
                         <a href={"https://www.facebook.com/search/pages/?q=" + search} target="_blank" rel="noopener noreferrer" > <i className="fa fa-facebook" ></i></a>
                         <a href={`https://twitter.com/search?q=${search}&f=user`} target="_blank" rel="noopener noreferrer" > <i className="fa fa-twitter" ></i></a>
                         <a href={`https://google.com/search?q=${search}+instagram`} target="_blank" rel="noopener noreferrer" > <i className="fa fa-instagram" ></i></a>
+                        <a href={result.external_urls.spotify} target="_blank" rel="noopener noreferrer"><i className="fa fa-spotify" ></i></a>
                         <a href={"https://soundcloud.com/search?q=" + search} target="_blank" rel="noopener noreferrer" > <i className="fa fa-soundcloud" ></i></a>
                       </div>
-                    </div> 
-                  <a href={result.external_urls.spotify} target="_blank" rel="noopener noreferrer"><img src="/spotify_icon.svg" title="View on Spotify.com" alt="spotify-icon" id="spotify-icon"></img></a>
+                      <p><strong>Genres: </strong>{result.genres.join(", ")}</p>
+                    </div>
                   </div>
                   <div className="container-fluid">
                     <div className="row">

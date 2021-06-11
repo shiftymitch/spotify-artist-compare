@@ -12,9 +12,6 @@ function Compare() {
         <div id="2" className="col">
             <Main artistCount={2} align={{textAlign: "center"}}/>
         </div>
-        <div id="3" className="col">
-            <Main artistCount={3} align={{textAlign: "center"}}/>
-        </div>
       </div>
     </div>
   );

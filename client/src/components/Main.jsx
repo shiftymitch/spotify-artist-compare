@@ -45,6 +45,9 @@ const Main = props => {
   };
 
   function handleFormSubmit(event) {
+    if(recentlySearched.length === 0) {
+      recentlySearched.push(search);
+    }
     event.preventDefault();
     // Get Spotify Artist
     axios.get(
@@ -181,8 +184,8 @@ const Main = props => {
   }
 
   function searchAgain(event) {
-    setSearch(event.target.innerHTML);
-    document.getElementById("search-Search").value = event.target.innerHTML;
+    setSearch(event.target.innerHTML.replace("&amp;", "&"));
+    document.getElementById("search-" + props.artistCount).value = event.target.innerHTML.replace("&amp;", "&");
     setTimeout(() => {
     }, 500);
     handleFormSubmit(event);
@@ -191,14 +194,16 @@ const Main = props => {
   return (
     <div className="row">
       <div className="left-column col-1">
-        <h5 className="mt-5 recently-searched">
-          Recently Searched
-        </h5>
-        {recentlySearched.map(artist => (
-          <p><button id={recentlySearched.indexOf(artist)} onClick={searchAgain}>
-            {artist}
-          </button></p>
-        ))}
+        <div className="sticky-top">
+          <h5 className="mt-5 recently-searched">
+            Recently Searched
+          </h5>
+          {recentlySearched.map(artist => (
+            <p><button id={"recent-" + recentlySearched.indexOf(artist)} onClick={searchAgain}>
+              {artist}
+            </button></p>
+          ))}
+        </div>
       </div>
       <Container>
         <h3 id={"search-header" + props.artistCount} className="text-center">Artist {props.artistCount}</h3>

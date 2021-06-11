@@ -180,14 +180,24 @@ const Main = props => {
     return artists.join(", ");
   }
 
+  function searchAgain(event) {
+    setSearch(event.target.innerHTML);
+    document.getElementById("search-Search").value = event.target.innerHTML;
+    setTimeout(() => {
+    }, 500);
+    handleFormSubmit(event);
+  }
+
   return (
     <div className="row">
-      <div className="left-column col-2">
+      <div className="left-column col-1">
         <h5 className="mt-5 recently-searched">
           Recently Searched
         </h5>
         {recentlySearched.map(artist => (
-          <p><button id={artist} onClick={handleFormSubmit}>{artist}</button></p>
+          <p><button id={recentlySearched.indexOf(artist)} onClick={searchAgain}>
+            {artist}
+          </button></p>
         ))}
       </div>
       <Container>
@@ -288,7 +298,7 @@ const Main = props => {
                           <a key={artist.id} onClick={() => {
                             document.getElementById("search-" + props.artistCount).value = artist.name;
                             setSearch(artist.name);
-                            recentlySearched.unshift(search);
+                            if (!recentlySearched.includes(artist.name)) { recentlySearched.unshift(artist.name);}
                             setTimeout(() => {
                               document.getElementById("search-btn-" + props.artistCount).click();
                               window.scrollTo(0, 0);
@@ -361,7 +371,7 @@ const Main = props => {
           </div>
         </div>
       </Container>
-      <div className="left-column col-2"></div>
+      <div className="left-column col-1"></div>
     </div>
   );
 };

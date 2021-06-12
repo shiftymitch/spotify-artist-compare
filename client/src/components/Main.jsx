@@ -232,7 +232,7 @@ const Main = props => {
             <ul className="search-results">
               {results.slice(0, 1).map(result => (
                 <li key={result.id} className="list-group-item">
-                  <div className="row header" style={props.align}>
+                  <div className="row header">
                     <div className="profile-img">
                       <img className="img-fluid" src={image()} alt={result.name}></img>
                     </div>
@@ -287,27 +287,50 @@ const Main = props => {
                         }} >
                           <div className="latest-release">
                             <img src={latestRelease.images == null ? "" : latestRelease.images[2].url} className="latest-img" alt={latestRelease.name}></img>
-                            <p>{latestRelease.name}</p>
-                            <p className="sub-text">{latestRelease.release_date == null ? "N/A" : moment(latestRelease.release_date).format("MMM Do, YYYY")}</p>
+                            <p className="track-name">{latestRelease.name}</p>
+                            <p className="sub-text">Release Date: {latestRelease.release_date == null ? "N/A" : moment(latestRelease.release_date).format("MMM Do, YYYY")}</p>
                           </div>
                         </a>
                       </div>
                       <div className="col">
-                        <p><strong>Tour History:</strong> (Click for more)</p>
-                        <a href={"https://www.songkick.com/artists/" + songkickArtistId} target="_blank" rel="noopener noreferrer">
+                        <p><strong>Tour History:</strong></p>
                           <div className="latest-release">
                             <img src="https://assets.sk-static.com/assets/images/nw/static-pages/styleguide/sk-black-badge.320daf9f279a7a0046acd0e8daed4987.jpg" id="icon" alt="songkick icon"></img>
-                            <p>Most Recent: {!events[0] ? "N/A" : events[0].location.city}</p>
-                            <p className="sub-text">{!events[0] ? "N/A" : moment(events[0].start.date).format("MMM Do, YYYY")}</p>
+                            <p className="track-name">Songkick</p>
+                            <a href={"https://www.songkick.com/artists/" + songkickArtistId} target="_blank" rel="noopener noreferrer"><p className="sub-text">Upcoming Events</p></a>
+                            <a href={"https://www.songkick.com/artists/" + songkickArtistId + "/gigography"} target="_blank" rel="noopener noreferrer"><p className="sub-text">Past Events</p></a>
                           </div>
-                        </a>
                       </div>
                     </div>
                   </div>
                   <hr></hr>
                   <div className="row">
                     <div className="col">
-                      <ul className="track-results mb-5">
+                    <ul className="related-artists mb-5">
+                        <h3>Related Artists:</h3>
+                        {relatedArtists.sort((a,b) => b.followers.total-a.followers.total).map(artist => (
+                          <a key={artist.id} onClick={() => {
+                            document.getElementById("search-" + props.artistCount).value = artist.name;
+                            setSearch(artist.name);
+                            if (!recentlySearched.includes(artist.name)) { recentlySearched.unshift(artist.name);}
+                            setTimeout(() => {
+                              document.getElementById("search-btn-" + props.artistCount).click();
+                              window.scrollTo(0, 0);
+                            }, 500);
+                          }} className="artist">
+                            <li className="list-group-item">
+                              <img src={!artist.images[2] ? "" :artist.images[2].url} className="artist-img" alt={artist.name}></img>
+                              <div>
+                              <p className="artist-name">{artist.name}</p>
+                              <p className="sub-text">Followers: {artist.followers.total.toLocaleString()}</p>
+                              </div>
+                            </li>
+                          </a>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="col">
+                    <ul className="track-results mb-5">
                         <h3>Top Tracks:</h3>
                         {console.log(topTracks)}
                         {topTracks == null ? "" : topTracks.map(track => (
@@ -334,30 +357,6 @@ const Main = props => {
                               <img src={track.album.images[2] == null ? "N/A" : track.album.images[2].url} className="track-img" alt={track.name}></img>
                               <p className="track-name">{track.name}</p>
                               <p className="sub-text">Release Date: {moment(track.album.release_date).format("MMM Do, YYYY")}</p>
-                            </li>
-                          </a>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="col">
-                    <ul className="related-artists mb-5">
-                        <h3>Related Artists:</h3>
-                        {relatedArtists.sort((a,b) => b.followers.total-a.followers.total).map(artist => (
-                          <a key={artist.id} onClick={() => {
-                            document.getElementById("search-" + props.artistCount).value = artist.name;
-                            setSearch(artist.name);
-                            if (!recentlySearched.includes(artist.name)) { recentlySearched.unshift(artist.name);}
-                            setTimeout(() => {
-                              document.getElementById("search-btn-" + props.artistCount).click();
-                              window.scrollTo(0, 0);
-                            }, 500);
-                          }} className="artist">
-                            <li className="list-group-item">
-                              <img src={!artist.images[2] ? "" :artist.images[2].url} className="artist-img" alt={artist.name}></img>
-                              <div>
-                              <p className="artist-name">{artist.name}</p>
-                              <p className="sub-text">Followers: {artist.followers.total.toLocaleString()}</p>
-                              </div>
                             </li>
                           </a>
                         ))}

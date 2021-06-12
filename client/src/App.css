@@ -122,7 +122,8 @@ ul, .row, .col {
   font-size: 25px;
 }
 
-.fa:hover {
+.fa:hover,
+.latest-release a p:hover {
   color: #1DB954;
 }
 
@@ -143,8 +144,7 @@ ul, .row, .col {
   margin-bottom: 5px;
 }
 
-.track li:hover, 
-.latest-release:hover, 
+.track li:hover,  
 .artist li:hover {
   border-style: inset;
   border: 2px solid #1DB954;
@@ -261,9 +261,16 @@ ul, .row, .col {
 }
 
 .artist-name, .track-name {
-  font-size: 22px;
   font-weight: bold;
   color: #252525;
+}
+
+.artist-name {
+  font-size: 22px;
+}
+
+.track-name {
+  font-size: 18px;
 }
 
 .sub-text {
@@ -389,11 +396,21 @@ ul, .row, .col {
 }
 
 @media only screen and (max-width: 440px) {
-
-  .recently-searched {
-    
+  .related-artists, 
+  .track-results, 
+  .remixes, 
+  .events, 
+  .latest-release {
+    margin-right: 0px;
   }
-
+  
+  .track-name {
+    font-size: 16px;
+    line-height: normal;
+  }
+  .artist-name {
+    font-size: 20px;
+  }
   .profile-img {
     padding-right: 0;
   }

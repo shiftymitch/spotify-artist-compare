@@ -7,10 +7,10 @@ function Compare() {
     <div>
       <div id="compare-container" className="row ml-5 mr-5">
         <div id="1" className="col">
-            <Main artistCount={1} align={{textAlign: "center"}}/>
+            <Main artistCount={1}/>
         </div>
         <div id="2" className="col">
-            <Main artistCount={2} align={{textAlign: "center"}}/>
+            <Main artistCount={2}/>
         </div>
       </div>
     </div>

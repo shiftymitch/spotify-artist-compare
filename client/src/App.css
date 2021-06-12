@@ -7,6 +7,10 @@ a, h1, h2, h3, h4, h5, h6 {
   color:#1DB954;
 }
 
+a {
+  cursor: pointer;
+}
+
 a:link {
   text-decoration: none;
 }
@@ -14,6 +18,10 @@ a:link {
 ul {
   list-style: none;
   line-height: 30px;
+}
+
+i {
+  cursor: pointer;
 }
 
 hr {
@@ -24,6 +32,7 @@ hr {
   background-color: #252525;
   display: flex;
   justify-content: space-between;
+  border-bottom: 2px solid #1DB954;
 }
 
 .navbar-brand {
@@ -215,6 +224,10 @@ ul, .row, .col {
   float: left;
 }
 
+.track-img {
+  float:
+}
+
 .latest-release {
   border-radius: 5px;
   border-style: inset;
@@ -247,7 +260,7 @@ ul, .row, .col {
   margin-right: 5px;
 }
 
-.artist-name {
+.artist-name, .track-name {
   font-size: 22px;
   font-weight: bold;
   color: #252525;
@@ -318,13 +331,40 @@ ul, .row, .col {
   color: #1DB954;
 }
 
-.left-column {
-  margin-top: 50px;
-  margin-left: 10px;
+.recently-searched-menu {
+  margin: auto;
+  text-align: center;
+  background-color: #252525;
+  border-left:2px solid #1DB954;
+  border-right:2px solid #1DB954;
+  border-bottom:2px solid #1DB954;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  color:#f9f9f9;
+  max-width: 50%;
 }
 
-.left-column p {
-  color: white;
+.recently-searched-icon i {
+  color:#1DB954;
+}
+
+.recently-searched-icon i:hover {
+  color:#f9f9f9;
+}
+
+.recently-searched-text {
+  font-weight: bold;
+  font-size: large;
+}
+
+.recently-searched-list {
+  display: none;
+  padding-bottom: 10px;
+}
+
+.recently-searched-list a {
+  text-decoration: underline;
+  margin: 5px;
 }
 
 @media only screen and (max-width: 1200px) {
@@ -344,11 +384,15 @@ ul, .row, .col {
   }
 
   #navbar-name {
-    margin-left: 0;
+    margin: auto;
   }
 }
 
 @media only screen and (max-width: 440px) {
+
+  .recently-searched {
+    
+  }
 
   .profile-img {
     padding-right: 0;

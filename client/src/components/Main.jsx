@@ -7,6 +7,7 @@ import moment from "moment";
 const Main = props => {
   const [token, setToken] = useState([]);
   const [songkickToken, setSongkickToken] = useState([]);
+  const [songkickArtistId, setSongkickArtistId] = useState([]);
   const [fbToken, setFBToken] = useState([]);
   const [search, setSearch] = useState();
   const [results, setResults] = useState([]);
@@ -120,6 +121,7 @@ const Main = props => {
           + songkickToken + "&query=" + search
         )
           .then(res6 => {
+            setSongkickArtistId(res6.data.resultsPage.results.artist[0].id);
             axios.get(
               "https://api.songkick.com/api/3.0/artists/"
               + res6.data.resultsPage.results.artist[0].id
@@ -192,17 +194,25 @@ const Main = props => {
   }
 
   return (
-    <div className="row">
-      <div className="left-column col-1">
-        <div className="sticky-top">
-          <h5 className="mt-5 recently-searched">
-            Recently Searched
-          </h5>
-          {recentlySearched.map(artist => (
-            <p><button id={"recent-" + recentlySearched.indexOf(artist)} onClick={searchAgain}>
-              {artist}
-            </button></p>
-          ))}
+    <div className="">
+      <div className="recently-searched-menu sticky-top">
+        <a className="recently-searched-icon" onClick={() => {
+          var x = document.getElementById("recently-searched-list" + props.artistCount);
+          if (x.style.display === "none") {
+            x.style.display = "block";
+          } else {
+            x.style.display = "none";
+          }
+        }}> 
+          <i className="fa fa-navicon" ></i>
+        </a>
+        
+        <div id={"recently-searched-list" + props.artistCount} className="recently-searched-list">
+            {recentlySearched.map(artist => (
+              <a id={"recent-" + recentlySearched.indexOf(artist)} onClick={searchAgain}>
+                {artist}
+              </a>
+            ))}
         </div>
       </div>
       <Container>
@@ -283,11 +293,11 @@ const Main = props => {
                         </a>
                       </div>
                       <div className="col">
-                        <p><strong>Last Event:</strong></p>
-                        <a href={!events[0] ? "N/A" : events[0].uri} target="_blank" rel="noopener noreferrer">
+                        <p><strong>Tour History:</strong> (Click for more)</p>
+                        <a href={"https://www.songkick.com/artists/" + songkickArtistId} target="_blank" rel="noopener noreferrer">
                           <div className="latest-release">
                             <img src="https://assets.sk-static.com/assets/images/nw/static-pages/styleguide/sk-black-badge.320daf9f279a7a0046acd0e8daed4987.jpg" id="icon" alt="songkick icon"></img>
-                            <p>{!events[0] ? "N/A" : events[0].location.city}</p>
+                            <p>Most Recent: {!events[0] ? "N/A" : events[0].location.city}</p>
                             <p className="sub-text">{!events[0] ? "N/A" : moment(events[0].start.date).format("MMM Do, YYYY")}</p>
                           </div>
                         </a>
@@ -297,7 +307,40 @@ const Main = props => {
                   <hr></hr>
                   <div className="row">
                     <div className="col">
-                      <ul className="related-artists mb-5">
+                      <ul className="track-results mb-5">
+                        <h3>Top Tracks:</h3>
+                        {console.log(topTracks)}
+                        {topTracks == null ? "" : topTracks.map(track => (
+                          <a key={track.id} className="track" onClick={() => {
+                            setPlayerType("track");
+                            setCurrentTrack(track.id);
+                          }} >
+                            <li className="list-group-item">
+                              <img src={track.album.images[2].url} className="track-img" alt={track.name}></img>
+                              <p className="track-name">{track.name}</p>
+                              <p className="sub-text">Release Date: {moment(track.album.release_date).format("MMM Do, YYYY")}</p>
+                            </li>
+                          </a>
+                        ))}
+                      </ul>
+                      <ul className="remixes mb-5">
+                        <h3>Remixes:</h3>
+                        {remixes == null ? "" : remixes.map(track => (
+                          <a key={track.id} className="track" onClick={() => {
+                            setPlayerType("track")
+                            setCurrentTrack(track.id);
+                          }}>
+                            <li className="list-group-item">
+                              <img src={track.album.images[2] == null ? "N/A" : track.album.images[2].url} className="track-img" alt={track.name}></img>
+                              <p className="track-name">{track.name}</p>
+                              <p className="sub-text">Release Date: {moment(track.album.release_date).format("MMM Do, YYYY")}</p>
+                            </li>
+                          </a>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="col">
+                    <ul className="related-artists mb-5">
                         <h3>Related Artists:</h3>
                         {relatedArtists.sort((a,b) => b.followers.total-a.followers.total).map(artist => (
                           <a key={artist.id} onClick={() => {
@@ -319,55 +362,6 @@ const Main = props => {
                           </a>
                         ))}
                       </ul>
-                      <ul className="track-results mb-5">
-                        <h3>Top Tracks:</h3>
-                        {topTracks == null ? "" : topTracks.map(track => (
-                          <a key={track.id} className="track" onClick={() => {
-                            setPlayerType("track");
-                            setCurrentTrack(track.id);
-                          }} >
-                            <li className="list-group-item">
-                              <img src={track.album.images[2].url} className="track-img" alt={track.name}></img>
-                              <p>{track.name}</p>
-                              <p className="sub-text">{getArtists(track)}</p>
-                            </li>
-                          </a>
-                        ))}
-                      </ul>
-                      <ul className="remixes mb-5">
-                        <h3>Remixes:</h3>
-                        {remixes == null ? "" : remixes.map(track => (
-                          <a key={track.id} className="track" onClick={() => {
-                            setPlayerType("track")
-                            setCurrentTrack(track.id);
-                          }}>
-                            <li className="list-group-item">
-                              <img src={track.album.images[2] == null ? "N/A" : track.album.images[2].url} className="track-img" alt={track.name}></img>
-                              <p>{track.name}</p>
-                              <p className="sub-text">{getArtists(track)}</p>
-                            </li>
-                          </a>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="col">
-                      <ul className="events mb-5">
-                        <h3>Recent Events:</h3>
-                        {events == null ? "" : events.map(event => (
-                          <a key={event.id} href={event.uri} className="track" target="_blank" rel="noopener noreferrer">
-                            <li className="list-group-item">
-                              <img src="https://assets.sk-static.com/assets/images/nw/static-pages/styleguide/sk-black-badge.320daf9f279a7a0046acd0e8daed4987.jpg" id="icon" alt="songkick icon"></img>
-                              <p>{event.location.city}</p>
-                              <p className="sub-text">{moment(event.start.date).format("MMM Do, YYYY")}</p>
-                            </li>
-                          </a>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col">
-                      
                     </div>
                   </div>
                 </li>
@@ -376,7 +370,6 @@ const Main = props => {
           </div>
         </div>
       </Container>
-      <div className="left-column col-1"></div>
     </div>
   );
 };

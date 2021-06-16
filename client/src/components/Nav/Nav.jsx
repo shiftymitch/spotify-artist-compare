@@ -6,7 +6,7 @@ function Nav() {
       <div className="navbar navbar-expand-lg position-sticky">
         <div  className="navbar-brand">
           {/* <img src="/spotify_icon.svg" id="navbar-icon" alt="spotify-icon"></img> */}
-          <p id="navbar-name"><strong>Lineup Builder</strong></p>
+          <p id="navbar-name"><strong><i className="fa fa-search" ></i> MUSIC FINDER</strong></p>
         </div>
         <a id="login" className="ml-auto mr-3" href="https://accounts.spotify.com/en/login/" target="popup" rel="noopener noreferrer" > 
           <button className="btn btn-sm btn-outline-success form-control ">

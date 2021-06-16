@@ -21,6 +21,8 @@ const Main = props => {
   const [FBAudience, setFBAudience] = useState([]);
   const [googleTrend, setGoogleTrend] = useState([]);
   const [recentlySearched, setRecentlySearched] = useState([]);
+  const [currentlyPlaying, setCurrentlyPlaying] = useState([]);
+  const [albumArt, setAlbumArt] = useState([]);
 
   useEffect(() => {
     // Get Spotify Token
@@ -46,10 +48,10 @@ const Main = props => {
   };
 
   function handleFormSubmit(event) {
+    event.preventDefault();
     if(recentlySearched.length === 0) {
       recentlySearched.push(search);
     }
-    event.preventDefault();
     // Get Spotify Artist
     axios.get(
       "https://api.spotify.com/v1/search?q="
@@ -74,8 +76,9 @@ const Main = props => {
           )
             .then(res2 => {
               setLatestRelease(res2.data.items[0])
-              setPlayerType("album")
+              setPlayerType("track")
               setCurrentTrack(res2.data.items[0].id)
+              setCurrentlyPlaying(res2.data.items[0])
             })
         
         // Get Top Tracks
@@ -195,7 +198,7 @@ const Main = props => {
 
   return (
     <div className="">
-      <div className="recently-searched-menu sticky-top">
+      <div className="recently-searched-menu">
         <a className="recently-searched-icon" onClick={() => {
           var x = document.getElementById("recently-searched-list" + props.artistCount);
           if (x.style.display === "none") {
@@ -209,10 +212,20 @@ const Main = props => {
         
         <div id={"recently-searched-list" + props.artistCount} className="recently-searched-list">
             {recentlySearched.map(artist => (
-              <a id={"recent-" + recentlySearched.indexOf(artist)} onClick={searchAgain}>
+              <p><a id={"recent-" + recentlySearched.indexOf(artist)} onClick={searchAgain}>
                 {artist}
-              </a>
+              </a></p>
             ))}
+        </div>
+      </div>
+      <div className="currently-playing">
+        <p className="currently-playing-text">Currently Playing:<br></br><span>{currentlyPlaying.name}</span></p>
+        {console.dir(currentlyPlaying)}
+        <img src={currentlyPlaying.album == null ? "" : currentlyPlaying.album.images[1].url} />
+        {/* Music Player */}
+          <p className="play-button"><i className="fa fa-play" ></i></p>
+        <div id="music-player" className="current-track sticky-top">
+          <iframe id="current-track" title="current-track" src={"https://open.spotify.com/embed/" + playerType + "/" + currentTrack} width="100%" height="100%" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         </div>
       </div>
       <Container>
@@ -223,10 +236,6 @@ const Main = props => {
           count={props.artistCount}
         />
         <div id={"main" + props.artistCount}>
-          {/* Music Player */}
-          <div id="music-player" className="current-track sticky-top">
-            <iframe id="current-track" title="current-track" src={"https://open.spotify.com/embed/" + playerType + "/" + currentTrack} width="100%" height="100%" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-          </div>
           {/* Search Results */}
           <div className="d-flex justify-content-around">
             <ul className="search-results">
@@ -243,6 +252,7 @@ const Main = props => {
                         <a href={`https://twitter.com/search?q=${search}&f=user`} target="_blank" rel="noopener noreferrer" > <i className="fa fa-twitter" ></i></a>
                         <a href={`https://google.com/search?q=${search}+instagram`} target="_blank" rel="noopener noreferrer" > <i className="fa fa-instagram" ></i></a>
                         <a href={result.external_urls.spotify} target="_blank" rel="noopener noreferrer"><i className="fa fa-spotify" ></i></a>
+                        <a href={`https://music.apple.com/us/search?term=${search}`} target="_blank" rel="noopener noreferrer"><i className="fa fa-apple" ></i></a>
                         <a href={"https://soundcloud.com/search?q=" + search} target="_blank" rel="noopener noreferrer" > <i className="fa fa-soundcloud" ></i></a>
                       </div>
                       <p><strong>Genres: </strong>{result.genres.join(", ")}</p>
@@ -282,8 +292,10 @@ const Main = props => {
                       <div className="col">
                         <p><strong>Last Release:</strong></p>
                         <a key={latestRelease.id} className="track" onClick={() => {
-                          setPlayerType("album")
+                          setPlayerType("album");
                           setCurrentTrack(latestRelease.id);
+                          setCurrentlyPlaying(latestRelease);
+                          document.querySelector(".currently-playing").style.display = "block";
                         }} >
                           <div className="latest-release">
                             <img src={latestRelease.images == null ? "" : latestRelease.images[2].url} className="latest-img" alt={latestRelease.name}></img>
@@ -320,43 +332,46 @@ const Main = props => {
                           }} className="artist">
                             <li className="list-group-item">
                               <img src={!artist.images[2] ? "" :artist.images[2].url} className="artist-img" alt={artist.name}></img>
-                              <div>
                               <p className="artist-name">{artist.name}</p>
-                              <p className="sub-text">Followers: {artist.followers.total.toLocaleString()}</p>
-                              </div>
+                              <p className="sub-text">Followers: {artist.followers.total.toLocaleString()}</p>                              
                             </li>
                           </a>
                         ))}
                       </ul>
                     </div>
                     <div className="col">
-                    <ul className="track-results mb-5">
-                        <h3>Top Tracks:</h3>
-                        {console.log(topTracks)}
+                      <ul className="track-results mb-5">
+                        <h3>Top 10 Tracks:</h3>
                         {topTracks == null ? "" : topTracks.map(track => (
                           <a key={track.id} className="track" onClick={() => {
                             setPlayerType("track");
                             setCurrentTrack(track.id);
+                            setCurrentlyPlaying(track);
+                            document.querySelector(".currently-playing").style.display = "block";
                           }} >
                             <li className="list-group-item">
                               <img src={track.album.images[2].url} className="track-img" alt={track.name}></img>
                               <p className="track-name">{track.name}</p>
-                              <p className="sub-text">Release Date: {moment(track.album.release_date).format("MMM Do, YYYY")}</p>
+                              <p className="sub-text">{moment(track.album.release_date).format("MMM Do, YYYY")}</p>
                             </li>
                           </a>
                         ))}
                       </ul>
+                    </div>
+                    <div className="col">
                       <ul className="remixes mb-5">
                         <h3>Remixes:</h3>
                         {remixes == null ? "" : remixes.map(track => (
                           <a key={track.id} className="track" onClick={() => {
                             setPlayerType("track")
                             setCurrentTrack(track.id);
+                            setCurrentlyPlaying(track);
+                            document.querySelector(".currently-playing").style.display = "block";
                           }}>
                             <li className="list-group-item">
                               <img src={track.album.images[2] == null ? "N/A" : track.album.images[2].url} className="track-img" alt={track.name}></img>
                               <p className="track-name">{track.name}</p>
-                              <p className="sub-text">Release Date: {moment(track.album.release_date).format("MMM Do, YYYY")}</p>
+                              <p className="sub-text">{moment(track.album.release_date).format("MMM Do, YYYY")}</p>
                             </li>
                           </a>
                         ))}

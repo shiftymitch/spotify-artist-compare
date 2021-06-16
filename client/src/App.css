@@ -32,7 +32,13 @@ hr {
   background-color: #252525;
   display: flex;
   justify-content: space-between;
+  max-height: 60px;
   border-bottom: 2px solid #1DB954;
+}
+
+.navbar i {
+  color: #1DB954;
+  font-size: 32px;
 }
 
 .navbar-brand {
@@ -137,6 +143,10 @@ ul, .row, .col {
   margin-right: 25px;
 }
 
+.track-results a li, .remixes a li {
+  min-height: 100px;
+}
+
 .track, 
 .artist {
   display: inline-block;
@@ -160,7 +170,6 @@ ul, .row, .col {
 
 .profile-img {
   object-fit: cover;
-  max-width: 270px;
   margin: 10px 15px 15px 15px;
 }
 
@@ -178,6 +187,7 @@ ul, .row, .col {
   border: 6px #252525;
   border-style: solid solid none solid;
   border-radius: 10px;
+  max-width: 270px;
 }
 
 .main-artist-name {
@@ -211,21 +221,21 @@ ul, .row, .col {
 
 .artist-img {
   border-radius: 50%;
-}
-
-.artist-img, .track-img {
   object-fit: cover;
-  width: 50px;
-  height: 50px;
+  width: 65px;
+  height: 65px;
   margin: 5px;
-  max-width: 50px;
-  min-height: 100%;
   margin-right: 10px;
   float: left;
 }
 
 .track-img {
-  float:
+  object-fit: cover;
+  width: 60px;
+  height: 60px;
+  margin: 5px;
+  margin-right: 10px;
+  float: left;
 }
 
 .latest-release {
@@ -234,6 +244,7 @@ ul, .row, .col {
   border: 1px solid #e2e2e2;
   padding: 15px;
   width: 92.75%;
+  min-height: 115px;
 }
 
 .event li {
@@ -261,6 +272,7 @@ ul, .row, .col {
 }
 
 .artist-name, .track-name {
+  margin-top: 5px;
   font-weight: bold;
   color: #252525;
 }
@@ -270,7 +282,8 @@ ul, .row, .col {
 }
 
 .track-name {
-  font-size: 18px;
+  font-size: 16px;
+  line-height: 95%;
 }
 
 .sub-text {
@@ -279,22 +292,54 @@ ul, .row, .col {
 
 .current-track {
   margin: 0 auto;
-  margin-bottom: 15px;
+  margin-top: -80px;
   right: 0;
   bottom: 0;
   left: 0;
   height: 80px;
   z-index: 10;
-  box-shadow: 0px 0px 30px #151515;
-  border: 2px solid #1DB954;
-  border-radius: 8px;
-  
 }
 
 #current-track {
   display: block;
   border-radius: 6px;
   overflow: hidden;
+  opacity: .01;
+}
+
+.currently-playing {
+  position: fixed;
+  bottom: 40px;
+  left: 2.5%;
+  display: none;
+}
+
+.currently-playing img {
+  /* max-width: 20%; */
+}
+
+.currently-playing p {
+  margin-bottom: 5px;
+  color: #1DB954;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.currently-playing p span {
+  font-weight: normal;
+  font-size: 12px;
+  color: white;
+}
+
+.play-button {
+  margin-top: -60px;
+  margin-left: 25px;
+}
+
+.play-button i {
+  color: #1DB954;
+  font-weight: bold;
+  font-size: 48px;
 }
 
 .trend-container {
@@ -318,6 +363,10 @@ ul, .row, .col {
   word-wrap: normal;
 }
 
+.data i {
+  font-size: 14px;
+}
+
 .footer {
   display: flex;
   padding: 8px;
@@ -328,10 +377,11 @@ ul, .row, .col {
   right: 0;
   bottom: 0;
   left: 0;
-  height: 60px;
+  height: 40px;
   z-index: 10;
   background-color: #252525;
   box-shadow: 0px 0px 30px #151515;
+  border-top: 2px solid #1DB954;
 }
 
 .footer p {
@@ -339,16 +389,19 @@ ul, .row, .col {
 }
 
 .recently-searched-menu {
-  margin: auto;
+  position: fixed;
+  bottom: 40px;
+  left: 40%;
   text-align: center;
   background-color: #252525;
   border-left:2px solid #1DB954;
   border-right:2px solid #1DB954;
-  border-bottom:2px solid #1DB954;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-top:2px solid #1DB954;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   color:#f9f9f9;
-  max-width: 50%;
+  min-width: 20%;
+  z-index: 100;
 }
 
 .recently-searched-icon i {
@@ -369,9 +422,15 @@ ul, .row, .col {
   padding-bottom: 10px;
 }
 
-.recently-searched-list a {
+.recently-searched-list p a {
   text-decoration: underline;
   margin: 5px;
+  color: white !important;
+}
+
+.recently-searched-list p a:hover {
+  text-decoration: underline !important;
+  color: #1DB954 !important;
 }
 
 @media only screen and (max-width: 1200px) {
@@ -393,6 +452,10 @@ ul, .row, .col {
   #navbar-name {
     margin: auto;
   }
+
+  .trend {
+    font-size: 14px;
+  }
 }
 
 @media only screen and (max-width: 440px) {
@@ -413,5 +476,10 @@ ul, .row, .col {
   }
   .profile-img {
     padding-right: 0;
+  }
+
+  .recently-searched-menu {
+    left: 27.5%;
+    min-width: 45%;
   }
 }

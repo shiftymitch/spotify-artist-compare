@@ -1,10 +1,44 @@
+:root {
+  --main: #aa00ff;
+  --sub-main: #efd0ff;
+  --bg: #151515;
+  --sub-bg: #252525;
+  --text: #3c1d52;
+  --box-shadow: #616161;
+  --border-radius: 10px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+background: var(--sub-bg); 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+background: #454545; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+background: var(--main); 
+}
+
+body {
+  background-color: var(--bg);
+}
+
 p {
-  color: black;
+  color: var(--text);
   margin-bottom: 0;
 }
 
 a, h1, h2, h3, h4, h5, h6 {
-  color:#1DB954;
+  color:var(--main);
 }
 
 a {
@@ -25,19 +59,19 @@ i {
 }
 
 hr {
-  border: 2px solid #1DB954;
+  border: 2px solid var(--main);
 }
 
 .navbar {
-  background-color: #252525;
+  background-color: var(--sub-bg);
   display: flex;
   justify-content: space-between;
   max-height: 60px;
-  border-bottom: 2px solid #1DB954;
+  border-bottom: 2px solid var(--main);
 }
 
 .navbar i {
-  color: #1DB954;
+  color: var(--main);
   font-size: 32px;
 }
 
@@ -52,27 +86,27 @@ hr {
 }
 
 #navbar-name {
-  color: #1DB954;
+  color: var(--main);
   font-size: 2rem;
   margin-left: 50px;
 }
 
 .btn-outline-success {
-  color:#1DB954;
-  border-color: #1DB954;
+  color:var(--text);
+  border-color: var(--main);
 }
 
 .btn-outline-success:hover {
-  background-color: #f9f9f9;
-  color:#252525;
-  border-color: #1DB954;
+  background-color: var(--text);
+  color:var(--sub-main);
+  border-color: var(--main);
 }
 
 #mainSearch, #main1, #main2, #main3 {
   display: none;
-  border: 2px solid #31f074;
-  background-color: #252525;
-  border-radius: 10px;
+  border: 2px solid var(--main);
+  background-color: var(--sub-bg);
+  border-radius: var(--border-radius);
   height: auto;
   padding: 15px;
   box-shadow: 0px 150px 40px #ffffff;
@@ -87,14 +121,14 @@ hr {
 }
 
 .login-helper p {
-  color: #1DB954;
+  color: var(--main);
   font-size: 11px;
   text-align: center;
   padding-bottom: 15px;
 }
 
 .login-helper p i {
-  color: #1DB954;
+  color: var(--main);
   font-size: 40px;
   padding-bottom: 0px;
 }
@@ -130,7 +164,7 @@ ul, .row, .col {
 
 .fa:hover,
 .latest-release a p:hover {
-  color: #1DB954;
+  color: var(--main);
 }
 
 .related-artists, 
@@ -138,7 +172,7 @@ ul, .row, .col {
 .remixes, 
 .events, 
 .latest-release {
-  color: black;
+  color: var(--text);
   padding: 15px 10px;
   margin-right: 25px;
 }
@@ -152,15 +186,6 @@ ul, .row, .col {
   display: inline-block;
   width: 100%;
   margin-bottom: 5px;
-}
-
-.track li:hover,  
-.artist li:hover {
-  border-style: inset;
-  border: 2px solid #1DB954;
-  background-color: #f1ffe6;
-  cursor: pointer;
-  box-shadow: 0px 5px 20px #616161;
 }
 
 .list-group-item {
@@ -184,15 +209,15 @@ ul, .row, .col {
 }
 
 .profile-img img {
-  border: 6px #252525;
+  border: 6px var(--sub-bg);
   border-style: solid solid none solid;
-  border-radius: 10px;
+  border-radius: var(--border-radius);
   max-width: 270px;
 }
 
 .main-artist-name {
   margin-top: 15px;
-  color: #1DB954;
+  color: var(--main);
   font-size: 2.5rem;
 }
 
@@ -203,8 +228,8 @@ ul, .row, .col {
 .data {
   padding: 5px;
   border-top: 2px #e2e2e2;
-  border-right: 4px #1DB954;
-  border-bottom: 4px #1DB954;
+  border-right: 4px var(--main);
+  border-bottom: 4px var(--main);
   border-left: 2px #e2e2e2;
   border-style: solid;
   margin: 5px;
@@ -274,7 +299,7 @@ ul, .row, .col {
 .artist-name, .track-name {
   margin-top: 5px;
   font-weight: bold;
-  color: #252525;
+  color: var(--text);
 }
 
 .artist-name {
@@ -315,12 +340,13 @@ ul, .row, .col {
 }
 
 .currently-playing img {
-  /* max-width: 20%; */
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
 }
 
 .currently-playing p {
   margin-bottom: 5px;
-  color: #1DB954;
+  color: var(--main);
   font-size: 18px;
   font-weight: bold;
 }
@@ -337,7 +363,7 @@ ul, .row, .col {
 }
 
 .play-button i {
-  color: #1DB954;
+  color: var(--main);
   font-weight: bold;
   font-size: 48px;
 }
@@ -347,11 +373,11 @@ ul, .row, .col {
 }
 
 .trend {
-  background-image: linear-gradient(to right, white, #1DB954);
+  background-image: linear-gradient(to right, white, var(--main));
   border: 2px solid #929292;
   padding: 0px 5px;
   text-align: center;
-  color: black;
+  color: var(--text);
 }
 
 .data p.trend-helper {
@@ -379,13 +405,13 @@ ul, .row, .col {
   left: 0;
   height: 40px;
   z-index: 10;
-  background-color: #252525;
-  box-shadow: 0px 0px 30px #151515;
-  border-top: 2px solid #1DB954;
+  background-color: var(--sub-bg);
+  box-shadow: 0px 0px 30px var(--sub-bg);
+  border-top: 2px solid var(--main);
 }
 
 .footer p {
-  color: #1DB954;
+  color: var(--main);
 }
 
 .recently-searched-menu {
@@ -393,23 +419,23 @@ ul, .row, .col {
   bottom: 40px;
   left: 40%;
   text-align: center;
-  background-color: #252525;
-  border-left:2px solid #1DB954;
-  border-right:2px solid #1DB954;
-  border-top:2px solid #1DB954;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  color:#f9f9f9;
+  background-color: var(--sub-bg);
+  border-left:2px solid var(--main);
+  border-right:2px solid var(--main);
+  border-top:2px solid var(--main);
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+  color:var(--text);
   min-width: 20%;
   z-index: 100;
 }
 
 .recently-searched-icon i {
-  color:#1DB954;
+  color:var(--main);
 }
 
 .recently-searched-icon i:hover {
-  color:#f9f9f9;
+  color:var(--text);
 }
 
 .recently-searched-text {
@@ -430,7 +456,7 @@ ul, .row, .col {
 
 .recently-searched-list p a:hover {
   text-decoration: underline !important;
-  color: #1DB954 !important;
+  color: var(--main) !important;
 }
 
 @media only screen and (max-width: 1200px) {

@@ -221,7 +221,7 @@ const Main = props => {
       <div className="currently-playing">
         <p className="currently-playing-text">Currently Playing:<br></br><span>{currentlyPlaying.name}</span></p>
         {console.dir(currentlyPlaying)}
-        <img src={latestRelease.images == null ? "" : latestRelease.images[1].url} />
+        <img src={currentlyPlaying.album == null ? "" : currentlyPlaying.album.images[1].url} />
         {/* Music Player */}
           <p className="play-button"><i className="fa fa-play" ></i></p>
         <div id="music-player" className="current-track sticky-top">

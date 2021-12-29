@@ -4,6 +4,7 @@
   --bg: #151515;
   --sub-bg: #252525;
   --text: #3c1d52;
+  --btntext: #ffffff;
   --box-shadow: #616161;
   --border-radius: 10px;
 }
@@ -71,7 +72,7 @@ hr {
 }
 
 .navbar i {
-  color: var(--main);
+  color: var(--btntext);
   font-size: 32px;
 }
 
@@ -92,7 +93,7 @@ hr {
 }
 
 .btn-outline-success {
-  color:var(--text);
+  color:var(--btntext);
   border-color: var(--main);
 }
 
@@ -410,7 +411,11 @@ ul, .row, .col {
   border-top: 2px solid var(--main);
 }
 
-.footer p {
+.footer p, .footer a {
+  color: var(--btntext);
+}
+
+.footer a:hover {
   color: var(--main);
 }
 
